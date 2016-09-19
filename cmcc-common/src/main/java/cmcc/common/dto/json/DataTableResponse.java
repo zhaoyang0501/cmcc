@@ -2,6 +2,8 @@ package cmcc.common.dto.json;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class DataTableResponse<T> implements Response {
 	private String code;
 	private String msg;
@@ -40,6 +42,7 @@ public class DataTableResponse<T> implements Response {
         this.datas = datas;
     }
     
+    @ApiModelProperty(value = "请求结果")
     public List<T> getDatas() {
         return datas;
     }

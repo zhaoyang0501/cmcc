@@ -2,6 +2,8 @@ package cmcc.common.dto.json;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class ListResponse<T> implements Response {
 	private String code;
 	private String msg;
@@ -30,6 +32,7 @@ public class ListResponse<T> implements Response {
 		return code;
 	}
 
+	@ApiModelProperty(value = "请求结果")
 	@Override
 	public String getMsg() {
 		return msg;

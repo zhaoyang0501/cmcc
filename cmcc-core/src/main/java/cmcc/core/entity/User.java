@@ -6,29 +6,44 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import cmcc.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name = "t_sys_user")
+@ApiModel
 public class User extends BaseEntity<Long>{
 	
 	public static final String DEFAULT_PASSWORD="123456";
+	
+	@ApiModelProperty(name="登录用户名")
 	private String username;
 	
+	@JsonIgnore
 	private String password;
 	
+	@ApiModelProperty(name="邮箱")
 	private String email;
 	
 	private String salt;
 	
 	private String remark;
 	
+	@ApiModelProperty(name="电话")
 	private String tel;
 	
+	@ApiModelProperty(name="姓名")
 	private String chinesename ="";
 	
+	@ApiModelProperty(name="性别")
 	private String sex;
 	
+	@ApiModelProperty(name="积分")
+	private Integer score = 0;
 	@OneToMany
 	private Set<Role> roles;
 	
@@ -74,6 +89,7 @@ public class User extends BaseEntity<Long>{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	@ApiModelProperty(name="邮箱")
 	public String getEmail() {
 		return email;
 	}

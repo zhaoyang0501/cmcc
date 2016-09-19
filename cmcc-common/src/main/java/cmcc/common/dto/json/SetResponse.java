@@ -2,6 +2,8 @@ package cmcc.common.dto.json;
 
 import java.util.Set;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class SetResponse<T> implements Response {
 	
 	private String code;
@@ -21,7 +23,7 @@ public class SetResponse<T> implements Response {
         this.datas = datas;
     }
 
-   
+    @ApiModelProperty(value = "请求结果")
     public Set<T> getDatas() {
         return datas;
     }

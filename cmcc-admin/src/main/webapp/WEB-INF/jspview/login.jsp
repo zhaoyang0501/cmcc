@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title></title>
+    <title><spring:message code="jsp.index.title" /> </title>
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/font-awesome.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.min.css" rel="stylesheet">
@@ -37,18 +38,17 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>中东分局业务分配系统</h1>
+                        <h1><spring:message code="jsp.index.title" /></h1>
                     </div>
                 </div>
             </div>
             <div class="col-sm-5">
                 <form method="post" action="login">
                     <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md">任务分配系统</p>
+                    <p class="m-t-md"><spring:message code="jsp.index.title" /></p>
                     <input type="text" name='username' class="form-control uname" placeholder="用户名" />
                     <input type="password" name='password' class="form-control pword m-b" placeholder="密码" />
-                    <span style="color: red;">${tip }</span>
-                    <input type="hidden" name="rememberMe" value="true"/>
+                    <a href="">忘记密码了？</a>
                     <button class="btn btn-success btn-block">登录</button>
                 </form>
             </div>

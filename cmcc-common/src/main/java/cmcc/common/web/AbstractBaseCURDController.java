@@ -16,7 +16,7 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 	@Autowired
 	private SimpleCurdService<M, ID> simpleCurdService;
 	
-	abstract String getBasePath();
+	abstract protected String getBasePath();
 	
 	@Override
 	@RequestMapping("index")

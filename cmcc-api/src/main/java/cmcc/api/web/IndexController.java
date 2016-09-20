@@ -2,30 +2,35 @@ package cmcc.api.web;
 
 import java.util.UUID;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cmcc.common.dto.json.ObjectResponse;
-import cmcc.common.dto.json.Response;
-import cmcc.common.dto.json.SuccessResponse;
-import cmcc.common.dto.json.UserDto;
-import cmcc.core.entity.User;
+import cmcc.core.dto.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+
 @Api(value = "首页")
 @RestController
 public class IndexController {
 	
-	@ApiOperation(value = "用户注册", notes = "")
+	@ApiOperation(value = "获得用户列表", notes = "列表信息", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/test", method = RequestMethod.POST)
+	public UserDto userinfo(@ApiParam(value = "用户名", required = true) String username,
+			@ApiParam(value = "密码", required = true) String password,
+			@ApiParam(value = "姓名", required = false) String chinesename){
+		return new UserDto();
+	}
+	
+	@ApiOperation(value = "用户注册33", notes = "33333")
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Response login(@ApiParam(value = "用户名", required = true) String username,
+	public User login(@ApiParam(value = "用户名", required = true) String username,
 			@ApiParam(value = "密码", required = true) String password,
 			@ApiParam(value = "姓名", required = false) String chinesename) {
-		return new SuccessResponse();
+		return new User();
 	}
 
 	@ApiOperation(value = "用户登录", notes = "")
@@ -40,9 +45,5 @@ public class IndexController {
 		return new ObjectResponse<String>(UUID.randomUUID().toString());
 	}
 	
-	@ApiOperation(value = "test", notes = "")
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public UserDto userinfo(String token) {
-		return new UserDto();
-	}
+	
 }

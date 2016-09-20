@@ -1,7 +1,5 @@
 package cmcc.common.dto.json;
 
-import io.swagger.annotations.ApiModelProperty;
-
 public class ObjectResponse<T> implements Response {
 	private String code;
 	private String msg;
@@ -19,7 +17,6 @@ public class ObjectResponse<T> implements Response {
         this.datas = datas;
     }
     
-    @ApiModelProperty(value = "请求结果")
     public T getDatas() {
         return datas;
     }

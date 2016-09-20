@@ -1,4 +1,4 @@
-package cmcc.core.dto;
+package cmcc.api.web;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,6 +10,17 @@ public class UserDto {
 	
 	@ApiModelProperty(name="登录用户名")
 	private String username;
+	@ApiModelProperty(name="登录用户名",required= true)
+	private String remark;
+	
+	@ApiModelProperty(name="登录用333户名",required= true)
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public String getId() {
 		return id;

@@ -10,9 +10,9 @@ public interface Response {
     public static final String CODE_EMPTY = "-1";
     public static final String MSG_EMPTY = "empty";
     
-    @ApiModelProperty(value = "响应代码")
+    @ApiModelProperty(name="状态码",value="状态码")
     String getCode();
     
-    @ApiModelProperty(value = "描述")
+    @ApiModelProperty(name="结果描述",value="结果描述")
 	String getMsg();
 }

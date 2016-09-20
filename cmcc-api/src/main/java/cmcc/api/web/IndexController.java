@@ -1,48 +1,41 @@
 package cmcc.api.web;
 
-import java.util.UUID;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import cmcc.common.dto.json.ObjectResponse;
-import cmcc.core.dto.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import cmcc.common.dto.json.Response;
+import cmcc.common.dto.json.SuccessResponse;
+import cmcc.core.dto.UserDto;
 
 @Api(value = "首页")
 @RestController
 public class IndexController {
 	
-	@ApiOperation(value = "获得用户列表", notes = "列表信息", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public UserDto userinfo(@ApiParam(value = "用户名", required = true) String username,
-			@ApiParam(value = "密码", required = true) String password,
-			@ApiParam(value = "姓名", required = false) String chinesename){
-		return new UserDto();
-	}
-	
-	@ApiOperation(value = "用户注册33", notes = "33333")
+	@ApiOperation(value = "用户注册")
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public User login(@ApiParam(value = "用户名", required = true) String username,
+	public Response login(@ApiParam(value = "用户名", required = true) String username,
 			@ApiParam(value = "密码", required = true) String password,
 			@ApiParam(value = "姓名", required = false) String chinesename) {
-		return new User();
+		return new SuccessResponse();
 	}
 
-	@ApiOperation(value = "用户登录", notes = "")
+	@ApiOperation(value = "用户登录", notes = "返回用户token")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ObjectResponse<User> login(String username, String password) {
-		return new ObjectResponse<User>(new User());
+	public ObjectResponse<UserDto> login(@ApiParam(value = "用户名手机号码", required = true) String username, 
+			@ApiParam(value = "用户密码", required = true)  String password) {
+			return new ObjectResponse<UserDto>(new UserDto());
 	}
 
 	@ApiOperation(value = "用户退出", notes = "")
 	@RequestMapping(value = "/loginout", method = RequestMethod.POST)
-	public ObjectResponse<String> loginout(String token) {
-		return new ObjectResponse<String>(UUID.randomUUID().toString());
+	public Response	loginout(String token) {
+		return new SuccessResponse();
 	}
 	
 	

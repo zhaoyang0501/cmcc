@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: cmcc-admin
 Implementation-Version: 1.0-SNAPSHOT
-Built-By: panchaoyang
+Built-By: pzy
 Implementation-Vendor-Id: cmcc
-Build-Jdk: 1.8.0_91
+Build-Jdk: 1.8.0_45
 Implementation-URL: http://projects.spring.io/spring-boot/cmcc-all/cmc
  c-admin/
 Created-By: Maven Integration for Eclipse

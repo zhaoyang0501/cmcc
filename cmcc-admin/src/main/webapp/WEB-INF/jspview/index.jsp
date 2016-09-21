@@ -55,7 +55,24 @@
                         </div>
                     </li>
                      <li>
-                        <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">业务菜单</span><span class="fa arrow"></span></a>
+                        <a href="#">
+                            <i class="fa fa fa-bar-chart-o"></i>
+                            <span class="nav-label">论坛模块</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="bbs/article/index">帖子管理</a>
+                            </li>
+                         
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="#">
+                            <i class="fa fa fa-bar-chart-o"></i>
+                            <span class="nav-label">系统设置</span>
+                            <span class="fa arrow"></span>
+                        </a>
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="sys/user/index">员工管理</a</li>
                         </ul>

@@ -5,6 +5,7 @@
     <!--main decorator-->
     <decorator name="main" page="main.jsp">
         <pattern>/sys/*</pattern>
+        <pattern>/bbs/*</pattern>
     </decorator>
 
 

@@ -16,8 +16,7 @@
  <properties>
 	<shiro.version>1.2.4</shiro.version>
  </properties>
- 
-	<dependencies>
+ <dependencies>
 			<dependency>
 			<groupId>cmcc</groupId>
 			<artifactId>cmcc-core</artifactId>

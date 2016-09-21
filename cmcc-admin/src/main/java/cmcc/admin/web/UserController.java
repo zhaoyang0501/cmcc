@@ -25,18 +25,17 @@ public class UserController extends AbstractBaseCURDController<User,Long>  {
 	}
 	
 	@Override
+	public String getBasePath() {
+		return "sys/user";
+	}
+	
+	@Override
 	@RequestMapping("index")
 	public String index(Model model) {
 		model.addAttribute("roles", this.getSimpleCurdService().findAllRoles());
 		return this.getBasePath()+"/index";
 	}
 
-	
-	@Override
-	public String getBasePath() {
-		return "sys/user";
-	}
-	
 	@ModelAttribute
 	public User preget(@RequestParam(required=false) Long id,@RequestParam(required=false) String role) {
 		User user = new User();

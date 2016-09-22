@@ -9,8 +9,6 @@ import cmcc.common.web.AbstractBaseCURDController;
 import cmcc.core.bbs.entity.Article;
 import cmcc.core.bbs.service.ArticleService;
 
-
-
 @Controller
 @RequestMapping("bbs/article")
 public class ArticleController extends AbstractBaseCURDController<Article,Long>  {

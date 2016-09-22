@@ -9,20 +9,24 @@
        <div class="row">
             <div class="col-sm-12">
                 <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>帖子管理 </h5>
-                        <div class="ibox-tools">
-                        </div>
-                    </div>
-                    
                     <div class="ibox-content">
                         <form role="form" class="form-inline">
+                         <div class="form-group">
+                                <label for="" class="sr-only">板块</label>
+                                <select placeholder="姓名"  class="form-control">
+                                <option value=""></option>
+                                <c:forEach items="${categorys}"  var="bean">
+                            	    <option value="${bean.id }">${bean.name }</option>
+                                </c:forEach>
+                                </select>
+                                
+                            </div>
+                            
                             <div class="form-group">
-                                <label for="exampleInputEmail2" class="sr-only">姓名</label>
-                                <input type="text" placeholder="姓名" id="_name" class="form-control">
+                                <label for="exampleInputEmail2" class="sr-only">标题</label>
+                                <input type="text" placeholder="标题 "  id="_name" class="form-control">
                             </div>
                             <button class="btn btn-primary" type="button" id='_search'>查询</button>
-                            <button class="btn btn-primary" type="button" id='_new'>新建</button>
                         </form>
                     </div>
                     
@@ -51,93 +55,7 @@
    </div>
    
    <div id='_form' style="display: none;">
-       <div class="ibox-content">
- 		 <div class="row">
-                            <div class="col-sm-12 b-r">
-		                           <form class="form-horizontal" action="" method="get">
-		                           <input name='id' type="hidden"/>
-		                           	<table class='table table-bordered'>
-		                           		<thead>
-		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>员工信息<h3></h3></td></tr>
-		                           		</thead>
-		                           		<tbody>
-		                           			<tr>
-		                           				<td>姓名</td>
-		                           				<td> <input name='chinesename' type="text" class="form-control"></td>
-		                           			</tr>
-		                           			
-		                           			<tr>
-		                           			<td>性别</td>
-		                           				<td>
-												  <label class='checkbox-inline'>
-												    <input type="radio" name="sex"  value="男" checked>
-												    	男
-												   </label>
-												   <label class='checkbox-inline'>
-												    <input type="radio" name="sex"  value="女">
-												 	   女
-												  </label>
-		                           				</td>
-		                           			</tr>
-		                           			
-		                           				
-		                           			<tr>
-		                           				<td>手机号码</td>
-		                           				<td> <input name='username' type="text" class="form-control"></td>
-		                           			</tr>
-		                           			
-		                           			<tr>
-		                           				<td>备用号码</td>
-		                           				<td> <input name='tel' type="text" class="form-control"></td>
-		                           			</tr>
-		                           			
-		                           			
-		                           			<tr>
-		                           				<td>email</td>
-		                           				<td> <input name='email'  type="text" class="form-control"></td>
-		                           			</tr>
-		                           			
-											<tr>
-												<td>责任范围</td>
-		                           				<td> <textarea name='remark' rows="4" cols="" style="width: 80%"></textarea></td>
-		                           			</tr>
-		                           			
-		                           			
-		                           			<tr>
-		                           				<td>角色</td>
-		                           				<td > 
-		                           				<c:forEach items="${roles }" var="bean">
-		                           				  <label class='checkbox-inline'>
-														<input type="checkbox" name="role" value="${bean.id }"> ${bean.name }
-												</label>
-		                           				</c:forEach>
-												</td>
-		                           			</tr>
-		                           			
-		                           		
-		                           			<tr>
-		                           				<td>提示</td>
-		                           				<td > 
-		                           					 <h4>提示</h4>
-		                               					 <ol>
-									    					<li>初始密码为123456，登记完成可以修改</li>
-									    				</ol>
-		                           				</td>
-		                           			</tr>
-		                           			<tr>
-		                           				<td colspan="6"> 
-		                           					 <div class="col-sm-4 col-sm-offset-2">
-		                                  			  		<button class="btn btn-primary" type="button" onclick="submit_form()">提交</button>
-		                                   				    <button class="btn btn-white" type="submit">取消</button>
-		                               				 </div>
-		                           				</td>
-		                           			</tr>
-		                           		</tbody>
-		                           	</table>
-		                           	</form>
-                            </div>
-                        </div>
-                        </div>
+      
    </div>
    <script>
     var table=null;
@@ -225,6 +143,7 @@
         	});
         	table=$('#dt_table_view').DataTable( {
         		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
+        		  "ordering": true,
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/bbs/article/list",
 	                "type": "POST",
@@ -248,8 +167,7 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>"+
-				                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>编辑 </a>";
+				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>";
 				                    },
 				                    "targets":7
 				                }

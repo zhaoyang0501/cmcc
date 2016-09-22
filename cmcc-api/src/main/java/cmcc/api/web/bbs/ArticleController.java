@@ -43,7 +43,6 @@ public class ArticleController {
 	@ApiOperation(value = "发帖")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ObjectResponse<Article> article(	@RequestBody Article article ){
-		
-		return new ObjectResponse<Article>(articleService.find(id));
+		return new ObjectResponse<Article>(articleService.find(3l));
 	}
 }

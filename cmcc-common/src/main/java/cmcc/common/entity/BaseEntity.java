@@ -16,7 +16,7 @@ public class BaseEntity<ID extends Serializable> {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private ID id;
 	
-    private Date createDate ;
+    private Date createDate = new Date();
 	
     private Date updateDate;
 	

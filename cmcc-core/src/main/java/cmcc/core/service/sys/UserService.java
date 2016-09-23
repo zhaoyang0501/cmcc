@@ -1,9 +1,11 @@
 package cmcc.core.service.sys;
 import java.util.List;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cmcc.common.exception.AlreadyExistedException;
 import cmcc.common.service.SimpleCurdService;
 import cmcc.core.entity.Role;
 import cmcc.core.entity.User;
@@ -18,6 +20,18 @@ public class UserService extends SimpleCurdService<User, Long> {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	public User registerUser(String username,String password,String chinesename) throws AlreadyExistedException{
+		User user = userRepository.findByUsername(username);
+		if(user!=null)
+			throw new AlreadyExistedException("用户名已经存在");
+		else
+		user = new User();
+		user.setChinesename(chinesename);
+		user.setUsername(username);
+		user.setPassword(DigestUtils.md5Hex(User.DEFAULT_PASSWORD));
+		return userRepository.save(user);
+	}
 	
 	public User findByUsername(String username){
 		return this.userRepository.findByUsername(username);

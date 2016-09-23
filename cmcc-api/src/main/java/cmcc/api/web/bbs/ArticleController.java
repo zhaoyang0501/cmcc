@@ -2,7 +2,6 @@ package cmcc.api.web.bbs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cmcc.common.dto.json.ListResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
+import cmcc.common.dto.json.SuccessResponse;
 import cmcc.core.bbs.entity.Article;
 import cmcc.core.bbs.entity.Category;
 import cmcc.core.bbs.service.ArticleService;
@@ -34,15 +34,21 @@ public class ArticleController {
 		return new ListResponse<Category>(categoryService.findAll());
 	}
 	
-	@ApiOperation(value = "获取帖子")
+	@ApiOperation(value = "获取帖子", response=Article.class,responseReference="article",responseContainer="objectResponse")
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
-	public ObjectResponse<Article> article(	@ApiParam(value = "帖子ID", required = true) @PathVariable Long id ){
+	public Response article(@ApiParam(value = "帖子ID", required = true) @PathVariable Long id ){
 		return new ObjectResponse<Article>(articleService.find(id));
 	}
 	
 	@ApiOperation(value = "发帖")
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ObjectResponse<Article> article(	@RequestBody Article article ){
-		return new ObjectResponse<Article>(articleService.find(3l));
+	public Response createArticle(@ApiParam(value = "标题", required = true) String title,
+			@ApiParam(value = "内容", required = true) String body){
+		
+		Article article = new Article();
+		article.setBody(body);
+		article.setTitle(title);
+		this.articleService.save(article);
+		return new SuccessResponse();
 	}
 }

@@ -7,10 +7,15 @@ import javax.persistence.Table;
 
 import cmcc.common.entity.BaseEntity;
 import cmcc.core.entity.User;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+@ApiModel
 @Entity
 @Table(name = "t_bbs_article")
 public class Article extends BaseEntity<Long>{
+	
+	@ApiModelProperty(value="333",name="333")
 	
 	private String  title;
 	

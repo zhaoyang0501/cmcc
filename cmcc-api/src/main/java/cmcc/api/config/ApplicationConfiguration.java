@@ -17,13 +17,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
-	@Bean
-	public MultipartConfigElement multipartConfigElement() {
-		MultipartConfigFactory factory = new MultipartConfigFactory();
-		factory.setMaxFileSize("50MB");
-		factory.setMaxRequestSize("50MB");
-		return factory.createMultipartConfig();
-	}
+	
 
 	@Bean
 	public Docket createRestApi() {

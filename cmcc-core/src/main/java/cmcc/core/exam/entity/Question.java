@@ -46,16 +46,16 @@ public class Question  extends BaseEntity<Long>{
 		this.title = title;
 	}
 
-	public LevelEnum getLevel() {
-		return Level;
+	public String getLevel() {
+		return Level.getLable();
 	}
 
 	public void setLevel(LevelEnum level) {
 		Level = level;
 	}
 
-	public QuestionTypeEnum getType() {
-		return type;
+	public String getType() {
+		return type.getLable();
 	}
 
 	public void setType(QuestionTypeEnum type) {

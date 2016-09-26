@@ -1,13 +1,13 @@
 package cmcc.core.exam.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cmcc.common.entity.BaseEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "t_exam_answer")
 public class Answer extends BaseEntity<Long> {
@@ -16,7 +16,8 @@ public class Answer extends BaseEntity<Long> {
 	
 	private Boolean isRight;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, optional = false)  
+	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name="questionid")  
 	private Question question;
 	

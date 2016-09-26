@@ -93,6 +93,51 @@
 			                           				</select>
 			                           			</td>
 			                           		</tr>
+			                           		
+			                           		<tr>
+			                           			<td>选项</td>
+			                           			<td>
+				                           			<table class='table '>
+				                           			<thead>
+				                           			
+				                           			<tr>
+				                           				<th>答案</th>
+				                           				<th>正确选项</th>
+				                           			</tr>
+				                           			</thead>
+				                           				<tbody>
+				                           					<tr>
+				                           						<td><input  name='answers[0] .title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[0] .isRight"  value="true" ></label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           				   <tr>
+				                           						<td><input  name='answers[1] .title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[1] .isRight"  value="true" ></label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           					  <tr>
+				                           						<td><input  name='answers[2] .title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[2] .isRight"  value="true" ></label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           					 <tr>
+				                           						<td><input  name='answers[3] .title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[3] .isRight"  value="true" ></label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           				</tbody>
+			                           				</table>
+			                           			</td>
+			                           		</tr>
 		                           			<tr>
 		                           				<td>提示</td>
 		                           				<td > 
@@ -209,13 +254,13 @@
 				"columns" : [{
 					"data" : "id"
 				}, {
-					"data" : ""
+					"data" : "id"
 				},{
 					"data" : "title",
 				},{
-					"data" : "type.lable",
+					"data" : "type",
 				},{
-					"data" : "level.lable",
+					"data" : "level",
 				},{
 					"data" : "createDate",
 				},{

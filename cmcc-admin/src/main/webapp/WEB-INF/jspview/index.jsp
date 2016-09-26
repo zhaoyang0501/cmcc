@@ -67,6 +67,19 @@
                          
                         </ul>
                     </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa fa-bar-chart-o"></i>
+                            <span class="nav-label">考试模块</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="exam/question/index">题库管理</a>
+                            </li>
+                         
+                        </ul>
+                    </li>
                      <li>
                         <a href="#">
                             <i class="fa fa fa-bar-chart-o"></i>

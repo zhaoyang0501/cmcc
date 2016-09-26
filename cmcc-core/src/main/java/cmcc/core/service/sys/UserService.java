@@ -1,6 +1,8 @@
 package cmcc.core.service.sys;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class UserService extends SimpleCurdService<User, Long> {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Transactional
 	public User registerUser(String username,String password,String chinesename) throws AlreadyExistedException{
 		User user = userRepository.findByUsername(username);
 		if(user!=null)
@@ -31,6 +34,13 @@ public class UserService extends SimpleCurdService<User, Long> {
 		user.setUsername(username);
 		user.setPassword(DigestUtils.md5Hex(User.DEFAULT_PASSWORD));
 		return userRepository.save(user);
+	}
+	/***
+	 * 登录不成功返回null
+	 * @return
+	 */
+	public User login(String username,String password){
+		return  this.userRepository.findByUsernameAndPassword(username, DigestUtils.md5Hex(password));
 	}
 	
 	public User findByUsername(String username){

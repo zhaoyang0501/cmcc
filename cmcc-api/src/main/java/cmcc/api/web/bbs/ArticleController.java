@@ -18,7 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Api(value = "论坛-电子书")
+@Api(value = "论坛")
 @RestController
 public class ArticleController {
 	
@@ -28,7 +28,8 @@ public class ArticleController {
 	@Autowired
 	private CategoryService categoryService;
 	
-	@ApiOperation(value = "获取所有板块")
+	
+	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=Article.class)
 	@RequestMapping(value = "/allcategory", method = RequestMethod.GET)
 	public ListResponse<Category> AllCategory(){
 		return new ListResponse<Category>(categoryService.findAll());

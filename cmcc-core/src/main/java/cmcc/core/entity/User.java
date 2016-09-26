@@ -1,5 +1,6 @@
 package cmcc.core.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -12,7 +13,9 @@ import cmcc.common.entity.BaseEntity;
 
 @Entity
 @Table(name = "t_sys_user")
-public class User extends BaseEntity<Long>{
+public class User extends BaseEntity<Long> implements Serializable{
+	
+	private static final long serialVersionUID = 2927194419168198403L;
 	
 	public static final String DEFAULT_PASSWORD="123456";
 	

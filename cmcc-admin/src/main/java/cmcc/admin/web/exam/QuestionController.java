@@ -46,6 +46,7 @@ public class QuestionController extends AbstractBaseCURDController<Question,Long
 		getSimpleCurdService().save(m);
 		return new SuccessResponse();
 	}
+	
 	@ModelAttribute
 	public Question preget(@RequestParam(required=false) Long id) {
 		Question bean = new Question();

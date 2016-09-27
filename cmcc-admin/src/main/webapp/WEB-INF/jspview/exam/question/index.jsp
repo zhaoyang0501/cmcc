@@ -13,7 +13,7 @@
                         <form role="form" class="form-inline">
                          <div class="form-group">
                                 <label for="" class="sr-only">类别</label>
-                                <select placeholder="姓名"  class="form-control">
+                                <select  class="form-control" >
                                 <option value=""></option>
                                 <c:forEach items="${categorys}"  var="bean">
                             	    <option value="${bean.id }">${bean.name }</option>
@@ -76,8 +76,8 @@
 		                           			<tr>
 			                           			<td>题目类型</td>
 			                           			<td> 
-			                           				<select name='type'  class="form-control">
-			                           					<c:forEach items="${types}" var="type">
+			                           				<select name='type'  class="form-control" >
+			                           					<c:forEach items="${types}" var="type" >
 			                           						<option value="${type.name()}">${type.lable }</option>
 			                           					</c:forEach>
 			                           				</select>
@@ -97,7 +97,7 @@
 			                           		<tr>
 			                           			<td>选项</td>
 			                           			<td>
-				                           			<table class='table '>
+				                           			<table class='table' id='exam_items_table'>
 				                           			<thead>
 				                           			
 				                           			<tr>
@@ -105,36 +105,105 @@
 				                           				<th>正确选项</th>
 				                           			</tr>
 				                           			</thead>
-				                           				<tbody>
+				                           				<!-- 单选题 -->
+				                           				/* <option value="SINGLECHOICE">单选题</option>
+			
+			<option value="MULTISELECT">多选题</option>
+		
+			<option value="TRUEORFALSE">判断题</option>
+		
+			<option value="SUBJECTIVE">问答题</option>
+ */
+				                           				<tbody id='' style="display: none;">
 				                           					<tr>
-				                           						<td><input  name='answers[0] .title' class="form-control"/></td>
+				                           						<td><input  name='answers[0].title' class="form-control"/></td>
 				                           						<td>
-				                           							<label class='checkbox-inline'> <input type="radio" name="answers[0] .isRight"  value="true" ></label>
+				                           							<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           				   <tr>
-				                           						<td><input  name='answers[1] .title' class="form-control"/></td>
+				                           						<td><input  name='answers[1].title' class="form-control"/></td>
 				                           						<td>
-				                           							<label class='checkbox-inline'> <input type="radio" name="answers[1] .isRight"  value="true" ></label>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[1].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           					  <tr>
-				                           						<td><input  name='answers[2] .title' class="form-control"/></td>
+				                           						<td><input  name='answers[2].title' class="form-control"/></td>
 				                           						<td>
-				                           							<label class='checkbox-inline'> <input type="radio" name="answers[2] .isRight"  value="true" ></label>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[2].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           					 <tr>
-				                           						<td><input  name='answers[3] .title' class="form-control"/></td>
+				                           						<td><input  name='answers[3].title' class="form-control"/></td>
 				                           						<td>
-				                           							<label class='checkbox-inline'> <input type="radio" name="answers[3] .isRight"  value="true" ></label>
+				                           							<label class='checkbox-inline'> <input type="radio" name="answers[3].isRight"  value="true" ></label>
+				                           						</td>
+				                           					</tr>
+				                           				</tbody>
+				                           				
+				                           				
+				                           				<!-- 多选题 -->
+				                           				<tbody >
+				                           					<tr>
+				                           						<td><input  name='answers[0].title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class="checkbox-inline">
+																	  <input type="checkbox" name="answers[0].isRight"  value="true"> 
+																	</label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           				   <tr>
+				                           						<td><input  name='answers[1].title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class="checkbox-inline">
+																	  <input type="checkbox" name="answers[1].isRight"  value="true"> 
+																	</label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           					  <tr>
+				                           						<td><input  name='answers[2].title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class="checkbox-inline">
+																	  <input type="checkbox" name="answers[2].isRight"  value="true"> 
+																	</label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           					 <tr>
+				                           						<td><input  name='answers[3].title' class="form-control"/></td>
+				                           						<td>
+				                           							<label class="checkbox-inline">
+																	  <input type="checkbox" name="answers[3].isRight"  value="true"> 
+																	</label>
+				                           						</td>
+				                           					</tr>
+				                           				</tbody>
+				                           				
+				                           				
+				                           				<!-- 单选题 -->
+				                           				<tbody >
+				                           					<tr>
+				                           						<td><input  name='answers[0].title' class="form-control" value="正确"/></td>
+				                           						<td>
+																	<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
+				                           						</td>
+				                           					</tr>
+				                           					
+				                           				   <tr>
+				                           						<td><input  name='answers[1].title' class="form-control" value="错误"/></td>
+				                           						<td>
+				                           							<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           				</tbody>
+				                           				
+				                           				
 			                           				</table>
 			                           			</td>
 			                           		</tr>
@@ -231,7 +300,11 @@
      }
     
     $(document).ready(function(){
-        	
+          $("select[name='type']").change(function(){
+       		  $("#exam_items_table tbody").hide();
+       		  $("#exam_items_table #"+$(this).val()).show();
+          	}
+          );
     	  $("#_new").click(function(){
         		$("input[name='title']").val("");
  				$("textarea[name='title']").val("");

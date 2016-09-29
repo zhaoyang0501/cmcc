@@ -1,6 +1,7 @@
 package cmcc.common.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+
 import cmcc.common.entity.BaseEntity;
 import cmcc.common.repository.SimpleCurdRepository;
 /***
@@ -23,7 +25,6 @@ import cmcc.common.repository.SimpleCurdRepository;
  * @param <M>
  * @param <ID>
  */
-
 public class SimpleCurdService <M extends BaseEntity<?>, ID extends Serializable> {
 	
 	@Autowired
@@ -41,6 +42,9 @@ public class SimpleCurdService <M extends BaseEntity<?>, ID extends Serializable
 		  return simpleCurdRepository.findOne(id);
 	}
 	
+	public List<M> findAll(){
+		  return (List<M>) simpleCurdRepository.findAll();
+	}
 	public Page<M> findAll(final int pageNumber, final int pageSize,final String name,final String columnname){
          PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
          Specification<M> spec = new Specification<M>() {

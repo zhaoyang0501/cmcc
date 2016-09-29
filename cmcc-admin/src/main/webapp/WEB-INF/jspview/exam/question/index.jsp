@@ -13,7 +13,7 @@
                         <form role="form" class="form-inline">
                          <div class="form-group">
                                 <label for="" class="sr-only">类别</label>
-                                <select  class="form-control" >
+                                <select name='categoryid'  class="form-control" >
                                 <option value=""></option>
                                 <c:forEach items="${categorys}"  var="bean">
                             	    <option value="${bean.id }">${bean.name }</option>
@@ -67,6 +67,17 @@
 		                           		<tbody>
 		                           			
 		                           			<tr>
+		                           				<td>类别</td>
+		                           				<td> 
+		                           					<select name='category.id'  class="form-control" >
+						                                <option value=""></option>
+						                                <c:forEach items="${categorys}"  var="bean">
+						                            	    <option value="${bean.id }">${bean.name }</option>
+						                                </c:forEach>
+						                                </select>
+		                           				</td>
+		                           			</tr>
+		                           			<tr>
 		                           				<td>题干</td>
 		                           				<td> 
 		                           					<textarea name='title' rows="3" class="form-control"></textarea>
@@ -105,20 +116,12 @@
 				                           				<th>正确选项</th>
 				                           			</tr>
 				                           			</thead>
-				                           				<!-- 单选题 -->
-				                           				/* <option value="SINGLECHOICE">单选题</option>
-			
-			<option value="MULTISELECT">多选题</option>
-		
-			<option value="TRUEORFALSE">判断题</option>
-		
-			<option value="SUBJECTIVE">问答题</option>
- */
-				                           				<tbody id='' style="display: none;">
+				                           			<!-- 单选题 -->
+				                           			<tbody id='SINGLECHOICE' >
 				                           					<tr>
 				                           						<td><input  name='answers[0].title' class="form-control"/></td>
 				                           						<td>
-				                           							<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
+				                           							<label class='checkbox-inline'> <input  type="radio"  name="answers[0].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
@@ -146,7 +149,7 @@
 				                           				
 				                           				
 				                           				<!-- 多选题 -->
-				                           				<tbody >
+				                           			 <tbody id='MULTISELECT' style="display: none;">
 				                           					<tr>
 				                           						<td><input  name='answers[0].title' class="form-control"/></td>
 				                           						<td>
@@ -185,8 +188,8 @@
 				                           				</tbody>
 				                           				
 				                           				
-				                           				<!-- 单选题 -->
-				                           				<tbody >
+				                           				 <tbody id='TRUEORFALSE' style="display: none;">
+				                           			
 				                           					<tr>
 				                           						<td><input  name='answers[0].title' class="form-control" value="正确"/></td>
 				                           						<td>
@@ -207,15 +210,6 @@
 			                           				</table>
 			                           			</td>
 			                           		</tr>
-		                           			<tr>
-		                           				<td>提示</td>
-		                           				<td > 
-		                           					 <h4>提示</h4>
-		                               					 <ol>
-									    					<li>初始密码为123456，登记完成可以修改</li>
-									    				</ol>
-		                           				</td>
-		                           			</tr>
 		                           			<tr>
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
@@ -305,6 +299,19 @@
        		  $("#exam_items_table #"+$(this).val()).show();
           	}
           );
+          
+          $("#SINGLECHOICE input[type='radio']").click(function(){
+        	  $("#SINGLECHOICE input[type='radio']").prop("checked",false);
+        	  $(this).prop("checked",true);
+          });
+          
+          $("#TRUEORFALSE input[type='radio']").click(function(){
+        	  $("#SINGLECHOICE input[type='radio']").prop("checked",false);
+        	  $(this).prop("checked",true);
+          });
+          
+          
+          
     	  $("#_new").click(function(){
         		$("input[name='title']").val("");
  				$("textarea[name='title']").val("");
@@ -318,16 +325,16 @@
         	
         	table=$('#dt_table_view').DataTable( {
         		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        		  "ordering": true,
+        		 "ordering": true,
 	            "ajax": {
-	                "url":  $.common.getContextPath() + "/exam/question/list",
+	                "url":  $.common.getContextPath() + "/exam/question/listall",
 	                "type": "POST",
 	                "dataSrc": "datas"
 	              },
 				"columns" : [{
 					"data" : "id"
 				}, {
-					"data" : "id"
+					"data" : "category.name"
 				},{
 					"data" : "title",
 				},{
@@ -355,8 +362,9 @@
         			} );
         		} 
         	 } ).on('preXhr.dt', function ( e, settings, data ) {
-		        	data.value = $("#_name").val();
-		        	data.columnname = 'chinesename';
+		        	data.title = $("#_title").val();
+		        	data.categoryid = $("select[name='categoryid']").val();
+		        	
 		        	return true;
 		     } ).on('xhr.dt', function ( e, settings, json, xhr ) {
 		    		 $(".dataTables_processing").hide();	

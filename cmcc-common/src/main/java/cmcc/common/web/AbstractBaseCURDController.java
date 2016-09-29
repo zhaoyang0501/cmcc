@@ -14,7 +14,7 @@ import cmcc.common.service.SimpleCurdService;
 public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID extends Serializable> implements BaseCURDController<M , ID >{
 	
 	@Autowired
-	private SimpleCurdService<M, ID> simpleCurdService;
+	protected SimpleCurdService<M, ID> simpleCurdService;
 	
 	abstract protected String getBasePath();
 	

@@ -13,7 +13,7 @@ import cmcc.common.dto.json.SuccessResponse;
 import cmcc.core.bbs.entity.Article;
 import cmcc.core.bbs.entity.Category;
 import cmcc.core.bbs.service.ArticleService;
-import cmcc.core.bbs.service.CategoryService;
+import cmcc.core.bbs.service.BbsCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -26,13 +26,13 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@Autowired
-	private CategoryService categoryService;
+	private BbsCategoryService bbsCategoryService;
 	
 	
 	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=Article.class)
 	@RequestMapping(value = "/allcategory", method = RequestMethod.GET)
 	public ListResponse<Category> AllCategory(){
-		return new ListResponse<Category>(categoryService.findAll());
+		return new ListResponse<Category>(bbsCategoryService.findAll());
 	}
 	
 	@ApiOperation(value = "获取帖子", response=Article.class,responseReference="article",responseContainer="objectResponse")

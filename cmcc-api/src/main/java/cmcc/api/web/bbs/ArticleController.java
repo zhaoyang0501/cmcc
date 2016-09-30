@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import cmcc.api.token.TokenValid;
 import cmcc.common.dto.json.ListResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
@@ -28,7 +29,7 @@ public class ArticleController {
 	@Autowired
 	private BbsCategoryService bbsCategoryService;
 	
-	
+	@TokenValid
 	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=Article.class)
 	@RequestMapping(value = "/allcategory", method = RequestMethod.GET)
 	public ListResponse<Category> AllCategory(){

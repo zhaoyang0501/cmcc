@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import cmcc.common.dto.json.DataTableResponse;
+import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
 import cmcc.common.dto.json.SuccessResponse;
@@ -44,7 +45,11 @@ public abstract  class AbstractBaseCURDController<M extends BaseEntity<?>, ID ex
 	@RequestMapping("delete")
 	@ResponseBody
 	public Response delete(ID id) {
-		simpleCurdService.delete(id);
+		try {
+			simpleCurdService.delete(id);
+		} catch (Exception e) {
+			return new FailedResponse("删除失败："+e.getMessage());
+		}
 		return new SuccessResponse();
 	}
 	

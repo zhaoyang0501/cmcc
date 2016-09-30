@@ -96,7 +96,7 @@
     
     function fun_delete(id){
     	
-    	layer.confirm('确定删除当前员工？', {
+    	layer.confirm('确定删除当前记录？', {
     		  btn: ['确定','取消'] //按钮
     		}, function(){
     			$.ajax({
@@ -104,8 +104,11 @@
     		 		   success: function(msg){
     		 		     if(msg.code==1){
     		 		    	 toastr.success('操作成功');
-    		 		    	 table.draw();
+    		 		    	
+    		 		     }else{
+    		 		    	 toastr.error(msg.msg);
     		 		     }
+    		 		    table.draw();
     		 		     layer.closeAll() ;
     		 		   }
     		 	});

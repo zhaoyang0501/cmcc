@@ -105,7 +105,7 @@
 		                           			
 		                           			<tr>
 		                           				<td>角色</td>
-		                           				<td > 
+		                           				<td> 
 		                           				<c:forEach items="${roles }" var="bean">
 		                           				  <label class='checkbox-inline'>
 														<input type="checkbox" name="role" value="${bean.id }"> ${bean.name }

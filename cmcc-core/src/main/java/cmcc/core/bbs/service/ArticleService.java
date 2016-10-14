@@ -1,5 +1,4 @@
 package cmcc.core.bbs.service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cmcc.common.service.SimpleCurdService;

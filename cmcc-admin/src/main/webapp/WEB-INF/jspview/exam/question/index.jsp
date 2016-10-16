@@ -24,7 +24,7 @@
                             
                             <div class="form-group">
                                 <label for="exampleInputEmail2" class="sr-only">题目</label>
-                                <input type="text" placeholder="题目 "  id="_name" class="form-control">
+                                <input type="text" placeholder="题目 "  id="_title" class="form-control">
                             </div>
                             <button class="btn btn-primary" type="button" id='_search'>查询</button>
                               <button class="btn btn-primary" type="button" id='_new'>新增</button>
@@ -99,7 +99,7 @@
 			                           			<td> 
 			                           				<select  name='level'  class="form-control">
 			                           					<c:forEach items="${levels}" var="level">
-			                           						<option value="${level.name()}">${level.lable }</option>
+			                           						<option  value="${level.name()}">${level.lable }</option>
 			                           					</c:forEach>
 			                           				</select>
 			                           			</td>
@@ -119,28 +119,28 @@
 				                           			<!-- 单选题 -->
 				                           			<tbody id='SINGLECHOICE' >
 				                           					<tr>
-				                           						<td><input  name='answers[0].title' class="form-control"/></td>
+				                           						<td><input type="text"  name='answers[0].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class='checkbox-inline'> <input  type="radio"  name="answers[0].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           				   <tr>
-				                           						<td><input  name='answers[1].title' class="form-control"/></td>
+				                           						<td><input  type="text" name='answers[1].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class='checkbox-inline'> <input type="radio" name="answers[1].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           					  <tr>
-				                           						<td><input  name='answers[2].title' class="form-control"/></td>
+				                           						<td><input  type="text" name='answers[2].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class='checkbox-inline'> <input type="radio" name="answers[2].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           					 <tr>
-				                           						<td><input  name='answers[3].title' class="form-control"/></td>
+				                           						<td><input  type="text" name='answers[3].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class='checkbox-inline'> <input type="radio" name="answers[3].isRight"  value="true" ></label>
 				                           						</td>
@@ -151,7 +151,7 @@
 				                           				<!-- 多选题 -->
 				                           			 <tbody id='MULTISELECT' style="display: none;">
 				                           					<tr>
-				                           						<td><input  name='answers[0].title' class="form-control"/></td>
+				                           						<td><input  type="text"  name='answers[0].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class="checkbox-inline">
 																	  <input type="checkbox" name="answers[0].isRight"  value="true"> 
@@ -160,7 +160,7 @@
 				                           					</tr>
 				                           					
 				                           				   <tr>
-				                           						<td><input  name='answers[1].title' class="form-control"/></td>
+				                           						<td><input  type="text" name='answers[1].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class="checkbox-inline">
 																	  <input type="checkbox" name="answers[1].isRight"  value="true"> 
@@ -169,7 +169,7 @@
 				                           					</tr>
 				                           					
 				                           					  <tr>
-				                           						<td><input  name='answers[2].title' class="form-control"/></td>
+				                           						<td><input   type="text" name='answers[2].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class="checkbox-inline">
 																	  <input type="checkbox" name="answers[2].isRight"  value="true"> 
@@ -178,7 +178,7 @@
 				                           					</tr>
 				                           					
 				                           					 <tr>
-				                           						<td><input  name='answers[3].title' class="form-control"/></td>
+				                           						<td><input  type="text" name='answers[3].title' class="form-control"/></td>
 				                           						<td>
 				                           							<label class="checkbox-inline">
 																	  <input type="checkbox" name="answers[3].isRight"  value="true"> 
@@ -191,14 +191,14 @@
 				                           				 <tbody id='TRUEORFALSE' style="display: none;">
 				                           			
 				                           					<tr>
-				                           						<td><input  name='answers[0].title' class="form-control" value="正确"/></td>
+				                           						<td><input   type="text" name='answers[0].title' class="form-control" value="正确"/></td>
 				                           						<td>
 																	<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
 				                           				   <tr>
-				                           						<td><input  name='answers[1].title' class="form-control" value="错误"/></td>
+				                           						<td><input  type="text"  name='answers[1].title' class="form-control" value="错误"/></td>
 				                           						<td>
 				                           							<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
 				                           						</td>
@@ -227,12 +227,61 @@
    </div>
    <script>
     var table=null;
+    function fun_cleanform(){
+    	$("select[name='id']").val("");
+    	$("select[name='level']").val("LEVEL1");
+    	$("select[name='type']").val("SINGLECHOICE");
+    	$("select[name='category.id']").val("");
+    	$("textarea[name='title']").val("");
+    	
+    	$("#SINGLECHOICE input[type='text']").val("");
+    	$("#MULTISELECT input[type='text']").val("");
+    	
+    	$("#exam_items_table input[type='checkbox']").prop("checked",false);
+    	$("#exam_items_table input[type='radio']").prop("checked",false);
+    	
+    }
+    function get_data(){
+    	 var data="category.id="+$("select[name='category.id']").val()+
+    			"&title="+$("textarea[name='title']").val()+
+    			"&type="+$("select[name='type']").val()+
+    			"&id="+$("input[name='id']").val()+
+    			"&level="+$("select[name='level']").val();
+    	
+    	if(!$("#SINGLECHOICE").is(":hidden")){
+    		for(i=0;i<$("#SINGLECHOICE input[type='text']").length;i++){
+        		data+="&answers["+i+"].title="+$("#SINGLECHOICE input[type='text']").eq(i).val();
+        	}
+        	for(i=0;i<$("#SINGLECHOICE input[type='radio']").length;i++){
+        		data+="&answers["+i+"].isRight="+$("#SINGLECHOICE input[type='radio']").eq(i).is(":checked");	 
+        	}
+    	}
+    	if(!$("#MULTISELECT").is(":hidden")){
+    		for(i=0;i<$("#MULTISELECT input[type='text']").length;i++){
+        		data+="&answers["+i+"].title="+$("#MULTISELECT input[type='text']").eq(i).val();
+        	}
+        	for(i=0;i<$("#MULTISELECT input[type='checkbox']").length;i++){
+        		data+="&answers["+i+"].isRight="+$("#MULTISELECT input[type='checkbox']").eq(i).is(":checked");	 
+        	}
+    	}
+    	
+    	if(!$("#TRUEORFALSE").is(":hidden")){
+    		for(i=0;i<$("#TRUEORFALSE input[type='text']").length;i++){
+        		data+="&answers["+i+"].title="+$("#TRUEORFALSE input[type='text']").eq(i).val();
+        	}
+        	for(i=0;i<$("#TRUEORFALSE input[type='checkbox']").length;i++){
+        		data+="&answers["+i+"].isRight="+$("#TRUEORFALSE input[type='checkbox']").eq(i).is(":checked");	 
+        	}
+    	}
+		return data;    	
+    }
+    
     
     function submit_form(){
     	$.ajax({
     		   type: "POST",
     		   url:  $.common.getContextPath() + "/exam/question/save",
-    		   data: $("form").serialize(),
+    		   data: get_data(),
     		   success: function(msg){
     		     if(msg.code==1){
     		    	 toastr.success('操作成功');
@@ -244,8 +293,7 @@
      }
     
     function fun_delete(id){
-    	
-    	layer.confirm('确定删除当前员工？', {
+    	layer.confirm('确定删除当前题目？', {
     		  btn: ['确定','取消'] //按钮
     		}, function(){
     			$.ajax({
@@ -264,24 +312,49 @@
     	
     	
      }
-    
+    /**点击修改*/
     function fun_update(id){
+    	
     	$.ajax({
  		   url:  $.common.getContextPath() + "/exam/question/get?id="+id,
  		   success: function(msg){
+ 			   
  		     if(msg.code==1){
+ 		    	fun_cleanform();
  		    	$("input[name='id']").val(msg.datas.id);
- 		    	$("input[name='chinesename']").val(msg.datas.chinesename);
- 		    	$("radio[name='sex']").val(msg.datas.sex);
- 		   		$("input[name='username']").val(msg.datas.username);
- 				$("input[name='tel']").val(msg.datas.tel);
- 				$("input[name='email']").val(msg.datas.email);
- 				$("textarea[name='remark']").val(msg.datas.remark);
- 				$("input:checkbox[name='role']").prop('checked',false); 
- 				for(var i=0;i<msg.datas.roles.length;i++){
- 					$("input:checkbox[value='"+msg.datas.roles[i].id+"']").prop('checked',true); 
- 				}
- 				
+ 		    	$("select[name='category.id']").val(msg.datas.category.id);
+ 		    	$("textarea[name='title']").val(msg.datas.title);
+ 		    	$("select[name='type'] option").each(function(){
+ 		    	   if($(this).html() == msg.datas.type){
+ 		    	  	 $("select[name='type']").val($(this).val());
+ 		    	   }
+ 		    	});
+ 		    	$("select[name='type']").change();
+ 		    	$("select[name='level'] option").each(function(){
+  		    	   if($(this).html() == msg.datas.level){
+  		    	  	 $("select[name='level']").val($(this).val());
+  		    	   }
+  		    	});
+  		    	
+ 		    	if(msg.datas.type=='单选题'){
+ 		    		for(i=0;i<msg.datas.answers.length;i++){
+ 		    			$("#SINGLECHOICE input[name='answers["+i+"].title']").val(msg.datas.answers[i].title);
+ 		    			$("#SINGLECHOICE input[name='answers["+i+"].isRight']").prop("checked",msg.datas.answers[i].isRight);
+ 		    		}
+ 		    	}
+ 		    	
+ 		    	if(msg.datas.type=='多选题'){
+ 		    		for(i=0;i<msg.datas.answers.length;i++){
+ 		    			$("#MULTISELECT input[name='answers["+i+"].title']").val(msg.datas.answers[i].title);
+ 		    			$("#MULTISELECT input[name='answers["+i+"].isRight']").prop("checked",msg.datas.answers[i].isRight);
+ 		    		}
+ 		    	}
+ 		    	if(msg.datas.type=='判断题'){
+ 		    		for(i=0;i<msg.datas.answers.length;i++){
+ 		    			$("#TRUEORFALSE input[name='answers["+i+"].title']").val(msg.datas.answers[i].title);
+ 		    			$("#TRUEORFALSE input[name='answers["+i+"].isRight']").prop("checked",msg.datas.answers[i].isRight);
+ 		    		}
+ 		    	}
  		    	layer.open({
       			  type: 1,
       			  skin: 'layui-layer-rim', 
@@ -313,8 +386,7 @@
           
           
     	  $("#_new").click(function(){
-        		$("input[name='title']").val("");
- 				$("textarea[name='title']").val("");
+    		  fun_cleanform();
         		layer.open({
         			  type: 1,
         			  skin: 'layui-layer-rim', //加上边框
@@ -349,7 +421,8 @@
 				 "columnDefs": [
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>";
+				                    	return "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>修改 </a>"+
+				                         "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>";
 				                    },
 				                    "targets":6
 				                }

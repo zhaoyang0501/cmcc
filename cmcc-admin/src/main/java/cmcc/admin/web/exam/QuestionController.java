@@ -51,6 +51,7 @@ public class QuestionController extends AbstractBaseCURDController<Question,Long
 		for(Answer answer:m.getAnswers()){
 			answer.setQuestion(m);
 		}
+		m.setCategory(examCategoryService.find(m.getCategory().getId()));
 		getSimpleCurdService().save(m);
 		return new SuccessResponse();
 	}

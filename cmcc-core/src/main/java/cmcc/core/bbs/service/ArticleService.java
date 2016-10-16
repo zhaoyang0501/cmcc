@@ -6,5 +6,4 @@ import cmcc.core.bbs.entity.Article;
 
 @Service
 public class ArticleService extends SimpleCurdService<Article, Long> {
-	
 }

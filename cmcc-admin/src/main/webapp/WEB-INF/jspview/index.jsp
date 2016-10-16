@@ -77,7 +77,10 @@
                             <li>
                                 <a class="J_menuItem" href="exam/question/index">题库管理</a>
                             </li>
-                         
+                            
+                             <li>
+                                <a class="J_menuItem" href="exam/category/index">题库分类</a>
+                            </li>
                         </ul>
                     </li>
                      <li>
@@ -87,7 +90,7 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
-                            <li><a class="J_menuItem" href="sys/user/index">员工管理</a</li>
+                            <li><a class="J_menuItem" href="sys/user/index">员工管理</a></li>
                         </ul>
                     </li>
                 </ul>

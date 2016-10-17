@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @MappedSuperclass
 public class BaseEntity<ID extends Serializable>  {
@@ -16,8 +18,10 @@ public class BaseEntity<ID extends Serializable>  {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private ID id;
 	
+    @ApiModelProperty(hidden=true)
     private Date createDate = new Date();
 	
+    @ApiModelProperty(hidden=true)
     private Date updateDate;
 	
 	public ID getId() {

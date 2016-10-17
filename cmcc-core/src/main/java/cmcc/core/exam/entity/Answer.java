@@ -6,14 +6,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cmcc.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "t_exam_answer")
+@JsonIgnoreProperties(value={"createDate","updateDate"})
 public class Answer extends BaseEntity<Long> {
 	
+	@ApiModelProperty(value="选项名称")
 	private String title;
 	
+	@ApiModelProperty(value="是否正确答案")
 	private Boolean isRight;
 	
 	@JsonIgnore

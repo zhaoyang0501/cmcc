@@ -30,20 +30,20 @@ public class ArticleController {
 	private BbsCategoryService bbsCategoryService;
 	
 	@TokenValid
-	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=Article.class)
+	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=Category.class)
 	@RequestMapping(value = "/allcategory", method = RequestMethod.GET)
 	public ListResponse<Category> AllCategory(){
 		return new ListResponse<Category>(bbsCategoryService.findAll());
 	}
 	
-	@ApiOperation(value = "获取帖子", response=Article.class,responseReference="article",responseContainer="objectResponse")
+	@ApiOperation(value = "获取帖子", response=Article.class)
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
 	public Response article(@ApiParam(value = "帖子ID", required = true) @PathVariable Long id ){
 		return new ObjectResponse<Article>(articleService.find(id));
 	}
 	
 	@ApiOperation(value = "发帖")
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public Response createArticle(@ApiParam(value = "标题", required = true) String title,
 			@ApiParam(value = "内容", required = true) String body){
 		

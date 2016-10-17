@@ -15,20 +15,24 @@ import io.swagger.annotations.ApiModelProperty;
 @Table(name = "t_bbs_article")
 public class Article extends BaseEntity<Long>{
 	
-	@ApiModelProperty(value="333",name="333")
-	
+	@ApiModelProperty(value="帖子名称")
 	private String  title;
 	
+	@ApiModelProperty(value="帖子内容")
 	private String body;
 	
+	@ApiModelProperty(value="点赞")
 	@Column(name="_like")
 	private Integer like;
 	
+	@ApiModelProperty(value="点击量")
 	private Integer click;
 	
+	@ApiModelProperty(value="板块")
 	@OneToOne
 	private Category category;
 	
+	@ApiModelProperty(value="发表人")
 	@OneToOne
 	private User user;
 

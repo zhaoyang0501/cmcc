@@ -21,9 +21,12 @@ public class Exam extends BaseEntity<Long> {
 	private Date endDate;
 	
 	private Integer minute;
-	/**题目*/
-	 @OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,  
-	            CascadeType.REMOVE }, fetch = FetchType.LAZY, mappedBy = "exam")  
+	
+	private String isEnable ;
+	
+	
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,  
+	            CascadeType.REMOVE }, fetch = FetchType.LAZY)  
 	private List<Question> questions ;
 	public String getTitle() {
 		return title;
@@ -55,5 +58,10 @@ public class Exam extends BaseEntity<Long> {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
-	
+	public String getIsEnable() {
+		return isEnable;
+	}
+	public void setIsEnable(String isEnable) {
+		this.isEnable = isEnable;
+	}
 }

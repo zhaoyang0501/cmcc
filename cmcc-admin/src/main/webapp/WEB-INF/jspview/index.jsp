@@ -77,9 +77,12 @@
                             <li>
                                 <a class="J_menuItem" href="exam/question/index">题库管理</a>
                             </li>
-                            
                              <li>
                                 <a class="J_menuItem" href="exam/category/index">题库分类</a>
+                            </li>
+                            
+                             <li>
+                                <a class="J_menuItem" href="exam/create/index">创建试卷</a>
                             </li>
                         </ul>
                     </li>

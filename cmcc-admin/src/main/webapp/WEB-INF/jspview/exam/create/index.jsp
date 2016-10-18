@@ -33,7 +33,7 @@
                                 <div class="col-sm-8">
                                    	<label class='checkbox-inline'> <input type="radio" name="isEnable"  value="true" >是</label>
                                    	<label class='checkbox-inline'> <input type="radio" name="isEnable" checked="checked" value="false" >否</label>
-				                     <span class="help-block m-b-none">只有启动状态手机端才会显示</span>      					
+				                     <span class="help-block m-b-none">只有启用状态手机端才会显示</span>      					
                                 </div>
                             </div>
                            <div class="hr-line-dashed"></div>
@@ -132,7 +132,7 @@
                             </tbody>
                           </table>
                     </div>
-                    
+                   
                 </div>
             </div>
         </div>
@@ -142,7 +142,7 @@
    
    <script>
     var table=null;
-    
+    var ids;
     function fun_reflesh_selectedquestions(){
     	$.ajax({
  		   type: "POST",
@@ -152,7 +152,7 @@
  		    	 $("#selected_questions").empty();
  		    	 for(i=0;i<msg.datas.length;i++){
  		    		 $("#selected_questions").append("<tr>"+
-            		 	"<td>"+msg.datas[i].id+"</td>"+
+            		 	"<td> <input type='hidden' value='"+msg.datas[i].id+"' name='selectqid'/>"+msg.datas[i].id+"</td>"+
                		 	"<td>"+msg.datas[i].category.name+"</td>"+
                			"<td>"+msg.datas[i].title+"</td>"+
                		 	"<td>"+msg.datas[i].type+"</td>"+
@@ -181,9 +181,18 @@
     		});
      }
     
+    function fun_initexam(){
+    	if('${exam.id}'!=''){
+    		$("#exam_form input[name='title']").val('${exam.title}');
+        	$("#exam_form input[name='eid']").val('${exam.id}');
+        	$("#exam_form input[name='minute']").val('${exam.minute}');
+        	$("#exam_form input[name='isEnable'][value='true']").prop('checked',true);
+        	fun_reflesh_selectedquestions();
+    	}
+    	
+    }
     function fun_doclick(obj){
     	var qid=$(obj).val();
-    
     	if($(obj).prop("checked")){
 	    	$.ajax({
 	 		   type: "POST",
@@ -220,8 +229,12 @@
     }
     
     $(document).ready(function(){
+    	
+    	fun_initexam();
+    	
     	$("body").addClass("gray-bg");
-          
+        
+    	
     	$("#_questions_btn").click(function(){
         		layer.open({
         			  type: 1,
@@ -255,7 +268,12 @@
 			 "columnDefs": [
 			                {
 			                    "render": function ( data, type, row ) {
-			                        return "<input type='checkbox' name='check' onclick='fun_doclick(this)' value='"+data+"'> ";
+			                    	var ids=$("#selected_questions input[name='selectqid']");
+			                    	for(i=0;i<ids.size();i++){
+			                    		if(ids.eq(i).val()==data)
+			                    			 return "<input type='checkbox' checked='checked' name='check' onclick='fun_doclick(this)' value='"+data+"'> ";
+			                    	}
+			               		 	return "<input type='checkbox'  name='check' onclick='fun_doclick(this)' value='"+data+"'> ";
 			                    },
 			                    "targets":5
 			                }

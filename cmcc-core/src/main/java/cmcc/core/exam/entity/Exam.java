@@ -35,8 +35,7 @@ public class Exam extends BaseEntity<Long> {
 	private Boolean isEnable ;
 	
 	@ApiModelProperty(name="题目",value="题目")
-	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.REFRESH,  
-	            CascadeType.REMOVE }, fetch = FetchType.LAZY)  
+	@OneToMany( fetch = FetchType.LAZY)  
 	private List<Question> questions ;
 	public String getTitle() {
 		return title;

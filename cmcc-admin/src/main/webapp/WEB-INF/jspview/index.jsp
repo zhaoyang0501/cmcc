@@ -80,10 +80,14 @@
                              <li>
                                 <a class="J_menuItem" href="exam/category/index">题库分类</a>
                             </li>
-                            
                              <li>
                                 <a class="J_menuItem" href="exam/create/index">创建试卷</a>
                             </li>
+                            
+                            <li>
+                                <a class="J_menuItem" href="exam/exam/index">所有试卷</a>
+                            </li>
+                            
                         </ul>
                     </li>
                      <li>

@@ -10,7 +10,7 @@
             <div class="col-sm-12">
                 <div class="ibox ">
                     <div class="ibox-title">
-                        <h5>用户管理 </h5>
+                        <h5>注册用户管理 </h5>
                         <div class="ibox-tools">
                         </div>
                     </div>
@@ -22,7 +22,7 @@
                                 <input type="text" placeholder="姓名" id="_name" class="form-control">
                             </div>
                             <button class="btn btn-primary" type="button" id='_search'>查询</button>
-                            <button class="btn btn-primary" type="button" id='_new'>新建</button>
+                            <button class="btn btn-primary" type="button" id='_new'>登记</button>
                         </form>
                     </div>
                     
@@ -36,7 +36,7 @@
 									<th>性别</th>
 									<th>备用电话</th>
 									<th>电子邮件</th>
-									<th>备注</th>
+									<th>冻结</th>
 									<th>操作</th>
 								</tr>
                             </thead>
@@ -58,7 +58,7 @@
 		                           <input name='id' type="hidden"/>
 		                           	<table class='table table-bordered'>
 		                           		<thead>
-		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>员工信息<h3></h3></td></tr>
+		                           		<tr style="text-align: center;" ><td colspan="6" ><h3>注册用户信息<h3></h3></td></tr>
 		                           		</thead>
 		                           		<tbody>
 		                           			<tr>
@@ -98,7 +98,7 @@
 		                           			</tr>
 		                           			
 											<tr>
-												<td>责任范围</td>
+												<td>备注</td>
 		                           				<td> <textarea name='remark' rows="4" cols="" style="width: 80%"></textarea></td>
 		                           			</tr>
 		                           			
@@ -120,7 +120,7 @@
 		                           				<td > 
 		                           					 <h4>提示</h4>
 		                               					 <ol>
-									    					<li>初始密码为123456，登记完成可以修改</li>
+									    					<li>初始密码为123456</li>
 									    				</ol>
 		                           				</td>
 		                           			</tr>
@@ -158,8 +158,7 @@
      }
     
     function fun_delete(id){
-    	
-    	layer.confirm('确定删除当前员工？', {
+    	layer.confirm('确定删除当前用户？', {
     		  btn: ['确定','取消'] //按钮
     		}, function(){
     			$.ajax({
@@ -175,10 +174,43 @@
     		}, function(){
     			 layer.closeAll() ;
     		});
-    	
-    	
      }
-    
+    function fun_freeze(id){
+    	layer.confirm('确定冻结当前用户，冻结后的用户将无法登陆？', {
+    		  btn: ['确定','取消'] //按钮
+    		}, function(){
+    			$.ajax({
+    		 		   url:  $.common.getContextPath() + "/sys/user/freeze?id="+id,
+    		 		   success: function(msg){
+    		 		     if(msg.code==1){
+    		 		    	 toastr.success('操作成功');
+    		 		    	 table.draw();
+    		 		     }
+    		 		     layer.closeAll() ;
+    		 		   }
+    		 	});
+    		}, function(){
+    			 layer.closeAll() ;
+    		});
+     }
+    function fun_unfreeze(id){
+    	layer.confirm('确定解冻当前用户？', {
+    		  btn: ['确定','取消'] //按钮
+    		}, function(){
+    			$.ajax({
+    		 		   url:  $.common.getContextPath() + "/sys/user/unfreeze?id="+id,
+    		 		   success: function(msg){
+    		 		     if(msg.code==1){
+    		 		    	 toastr.success('操作成功');
+    		 		    	 table.draw();
+    		 		     }
+    		 		     layer.closeAll() ;
+    		 		   }
+    		 	});
+    		}, function(){
+    			 layer.closeAll() ;
+    		});
+     }
     function fun_update(id){
     	$.ajax({
  		   url:  $.common.getContextPath() + "/sys/user/get?id="+id,
@@ -243,15 +275,35 @@
 				},{
 					"data" : "email",
 				},{
-					"data" : "remark",
+					"data" : "isFreeze",
 				},{
 					"data" : "id",
 				}] ,
 				 "columnDefs": [
+								{
+								    "render": function ( data, type, row ) {
+								        if(!data)
+								        	return "<span class='label label-primary'>正常 </span>";
+								        else
+								        	return 	"<span class='label label-danger '>冻结 </span>";
+								        	
+								    },
+								    "targets":6
+								}, 
 				                {
 				                    "render": function ( data, type, row ) {
-				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>"+
-				                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>编辑 </a>";
+				                    	if(row.isFreeze){
+				                    		 return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>"+
+						                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_unfreeze("+data+")'>解结 </a>"+
+						                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>编辑 </a>";
+				                    	}else{
+				                   		 return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>"+
+					                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_freeze("+data+")'>冻结 </a>"+
+					                        "<a tager='_blank' href='javascript:void(0)' onclick='fun_update("+data+")'>编辑 </a>";
+			                    
+				                    	}
+				                    
+				                       
 				                    },
 				                    "targets":7
 				                }

@@ -36,6 +36,10 @@ public class User extends BaseEntity<Long> implements Serializable{
 	
 	private String sex;
 	
+	private Boolean isFreeze;
+	
+	private String headimg;
+	
 	private Integer score = 0;
 	@OneToMany
 	private Set<Role> roles;
@@ -43,6 +47,31 @@ public class User extends BaseEntity<Long> implements Serializable{
 	public Set<Role> getRoles() {
 		return roles;
 	}
+	
+	public Boolean getIsFreeze() {
+		return isFreeze;
+	}
+
+	public void setIsFreeze(Boolean isFreeze) {
+		this.isFreeze = isFreeze;
+	}
+
+	public String getHeadimg() {
+		return headimg;
+	}
+
+	public void setHeadimg(String headimg) {
+		this.headimg = headimg;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
@@ -55,6 +84,7 @@ public class User extends BaseEntity<Long> implements Serializable{
 	public String getTel() {
 		return tel;
 	}
+	
 	public void setTel(String tel) {
 		this.tel = tel;
 	}

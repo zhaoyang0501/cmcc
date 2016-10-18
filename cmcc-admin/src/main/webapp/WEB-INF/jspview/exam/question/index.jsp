@@ -397,7 +397,6 @@
         	
         	table=$('#dt_table_view').DataTable( {
         		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        		 "ordering": true,
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/exam/question/listall",
 	                "type": "POST",

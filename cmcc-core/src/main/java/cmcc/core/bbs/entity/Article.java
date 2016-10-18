@@ -30,7 +30,7 @@ public class Article extends BaseEntity<Long>{
 	
 	@ApiModelProperty(value="板块")
 	@OneToOne
-	private Category category;
+	private BbsCategory category;
 	
 	@ApiModelProperty(value="发表人")
 	@OneToOne
@@ -68,11 +68,11 @@ public class Article extends BaseEntity<Long>{
 		this.click = click;
 	}
 
-	public Category getCategory() {
+	public BbsCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(BbsCategory category) {
 		this.category = category;
 	}
 

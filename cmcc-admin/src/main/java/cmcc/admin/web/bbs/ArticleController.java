@@ -16,7 +16,7 @@ import cmcc.core.bbs.service.BbsCategoryService;
 public class ArticleController extends AbstractBaseCURDController<Article,Long>  {
 	
 	@Autowired
-	private BbsCategoryService bbsCategoryService;
+	private BbsCategoryService bbsCategoryService1;
 	
 	@Override
 	public ArticleService getSimpleCurdService() {
@@ -31,7 +31,7 @@ public class ArticleController extends AbstractBaseCURDController<Article,Long> 
 	@Override
 	@RequestMapping("index")
 	public String index(Model model) {
-		model.addAttribute("categorys",bbsCategoryService.findAll());
+		model.addAttribute("categorys",bbsCategoryService1.findAll());
 		return this.getBasePath()+"/index";
 	}
 

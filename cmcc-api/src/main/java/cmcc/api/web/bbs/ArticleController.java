@@ -12,7 +12,7 @@ import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
 import cmcc.common.dto.json.SuccessResponse;
 import cmcc.core.bbs.entity.Article;
-import cmcc.core.bbs.entity.Category;
+import cmcc.core.bbs.entity.BbsCategory;
 import cmcc.core.bbs.service.ArticleService;
 import cmcc.core.bbs.service.BbsCategoryService;
 import io.swagger.annotations.Api;
@@ -30,10 +30,10 @@ public class ArticleController {
 	private BbsCategoryService bbsCategoryService;
 	
 	@TokenValid
-	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=Category.class)
+	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=BbsCategory.class)
 	@RequestMapping(value = "/allcategory", method = RequestMethod.GET)
-	public ListResponse<Category> AllCategory(){
-		return new ListResponse<Category>(bbsCategoryService.findAll());
+	public ListResponse<BbsCategory> AllCategory(){
+		return new ListResponse<BbsCategory>(bbsCategoryService.findAll());
 	}
 	
 	@ApiOperation(value = "获取帖子", response=Article.class)

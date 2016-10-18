@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name = "t_bbs_category")
 @JsonIgnoreProperties(value={"createDate","updateDate"})
-public class Category extends BaseEntity<Long>{
+public class BbsCategory extends BaseEntity<Long>{
 	
 	@ApiModelProperty(value="板块名称")
 	private String  name;

@@ -48,6 +48,7 @@
                     <p class="m-t-md"><spring:message code="jsp.index.title" /></p>
                     <input type="text" name='username' class="form-control uname" placeholder="用户名" />
                     <input type="password" name='password' class="form-control pword m-b" placeholder="密码" />
+                    <p style="color: red" >${tip }</p>
                     <a href="">忘记密码了？</a>
                     <button class="btn btn-success btn-block">登录</button>
                 </form>

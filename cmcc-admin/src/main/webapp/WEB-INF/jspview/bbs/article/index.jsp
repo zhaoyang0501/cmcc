@@ -77,7 +77,7 @@
     
     function fun_delete(id){
     	
-    	layer.confirm('确定删除当前员工？', {
+    	layer.confirm('确定删除当前帖子？', {
     		  btn: ['确定','取消'] //按钮
     		}, function(){
     			$.ajax({
@@ -143,7 +143,6 @@
         	});
         	table=$('#dt_table_view').DataTable( {
         		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
-        		  "ordering": true,
 	            "ajax": {
 	                "url":  $.common.getContextPath() + "/bbs/article/list",
 	                "type": "POST",
@@ -161,6 +160,8 @@
 					"data" : "createDate",
 				},{
 					"data" : "click",
+				},{
+					"data" : "",
 				},{
 					"data" : "id",
 				}] ,

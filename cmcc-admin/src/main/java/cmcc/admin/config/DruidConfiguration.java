@@ -45,6 +45,7 @@ public class DruidConfiguration {
                                       @Value("${spring.datasource.password}") String password) {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(driver);
+        druidDataSource.setName("admin-druid");
         druidDataSource.setUrl(url);
         druidDataSource.setUsername(username);
         druidDataSource.setPassword(password);

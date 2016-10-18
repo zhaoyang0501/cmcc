@@ -44,6 +44,7 @@ public class DruidConfiguration {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(driver);
         druidDataSource.setUrl(url);
+        druidDataSource.setName("api-druid");
         druidDataSource.setUsername(username);
         druidDataSource.setPassword(password);
         try {

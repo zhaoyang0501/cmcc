@@ -3,6 +3,7 @@
 .metadata
 bin/**
 tmp/**
+target/**
 tmp/**/*
 *.tmp
 *.bak
@@ -24,4 +25,5 @@ local.properties
 
 # PDT-specific
 .buildpath
+/target/
 /target/

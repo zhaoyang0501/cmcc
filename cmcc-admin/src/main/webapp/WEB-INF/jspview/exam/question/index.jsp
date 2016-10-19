@@ -228,7 +228,7 @@
    <script>
     var table=null;
     function fun_cleanform(){
-    	$("select[name='id']").val("");
+    	$("input[name='id']").val("");
     	$("select[name='level']").val("LEVEL1");
     	$("select[name='type']").val("SINGLECHOICE");
     	$("select[name='category.id']").val("");

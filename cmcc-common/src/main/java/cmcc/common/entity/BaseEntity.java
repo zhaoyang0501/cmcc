@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 
 
@@ -16,11 +18,13 @@ public class BaseEntity<ID extends Serializable>  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private ID id;
-	
+	private  ID id;
+    
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8") 
     @ApiModelProperty(hidden=true)
     private Date createDate = new Date();
-	
+    
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone = "GMT+8") 
     @ApiModelProperty(hidden=true)
     private Date updateDate;
 	

@@ -44,6 +44,7 @@ public class User extends BaseEntity<Long> implements Serializable{
 	@OneToMany
 	private Set<Role> roles;
 	
+
 	public Set<Role> getRoles() {
 		return roles;
 	}

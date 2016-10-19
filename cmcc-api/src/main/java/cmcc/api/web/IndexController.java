@@ -2,14 +2,17 @@ package cmcc.api.web;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cmcc.api.token.TokenValid;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
@@ -69,5 +72,28 @@ public class IndexController {
 		return new SuccessResponse();
 	}
 	
+	@ApiOperation(value = "密码重置", notes = "需要token，成功返回success")
+	@RequestMapping(value = "/resetpw", method = RequestMethod.POST)
+	public Response	resetpw(@ApiParam(value = "token", required = true) @RequestParam String token,
+			@ApiParam(value = "新密码", required = true) String password,
+			@ApiParam(value = "密码重复", required = true) String passwordagain) {
+		if(!isPasswordEnable(password,passwordagain))
+			return new FailedResponse("两次密码不一致");
+		
+		User user = (User)redisTemplate.opsForValue().get(token);
+		if(user==null)
+			return new FailedResponse("token无效");
+		else{
+			user.setPassword(DigestUtils.md5Hex(password));
+			userService.save(user);
+		}
+		
+		return new SuccessResponse();
+	}
 	
+	public Boolean isPasswordEnable(String password,String passwordagain){
+		if(password==null||passwordagain==null)
+			return false;
+		return password.equals(passwordagain);
+	}
 }

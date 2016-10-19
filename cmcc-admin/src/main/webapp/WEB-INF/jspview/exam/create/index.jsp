@@ -16,7 +16,7 @@
                     
                    	 <div class="ibox-content">
                         <form id='exam_form' role="form" class="form-horizontal">
-                        <input type="hidden" name="eid" />
+                        <input type="hidden" name="id" />
                             <div class="form-group">
                                 
                                 <label class="col-sm-4 control-label">试卷标题</label>
@@ -146,7 +146,7 @@
     function fun_reflesh_selectedquestions(){
     	$.ajax({
  		   type: "POST",
- 		   url:  $.common.getContextPath() + "/exam/create/questions?eid="+ $("input[name='eid']").val(),
+ 		   url:  $.common.getContextPath() + "/exam/create/questions?eid="+ $("input[name='id']").val(),
  		   success: function(msg){
  		     if(msg.code==1){
  		    	 $("#selected_questions").empty();
@@ -174,7 +174,7 @@
     		     if(msg.code==1){
     		    	 toastr.success('操作成功');
     		    	 table.draw();
-    		    	 $("input[name='eid']").val(msg.datas.id);
+    		    	 $("input[name='id']").val(msg.datas.id);
     		     }
     		     layer.closeAll() ;
     		   }
@@ -184,7 +184,7 @@
     function fun_initexam(){
     	if('${exam.id}'!=''){
     		$("#exam_form input[name='title']").val('${exam.title}');
-        	$("#exam_form input[name='eid']").val('${exam.id}');
+        	$("#exam_form input[name='id']").val('${exam.id}');
         	$("#exam_form input[name='minute']").val('${exam.minute}');
         	$("#exam_form input[name='isEnable'][value='true']").prop('checked',true);
         	fun_reflesh_selectedquestions();
@@ -199,7 +199,7 @@
 	 		   url:  $.common.getContextPath() + "/exam/create/selectQuestion",
 	 		   data: {
 	 			   "qid":qid,
-	 			   "eid":$("input[name='eid']").val()
+	 			   "eid":$("input[name='id']").val()
 	 		   },
 	 		   success: function(msg){
 	 		     if(msg.code==1){
@@ -215,7 +215,7 @@
  	 		   url:  $.common.getContextPath() + "/exam/create/unselectQuestion",
  	 		   data: {
  	 			   "qid":qid,
- 	 			   "eid":$("input[name='eid']").val()
+ 	 			   "eid":$("input[name='id']").val()
  	 		   },
  	 		   success: function(msg){
  	 		     if(msg.code==1){

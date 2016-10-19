@@ -24,6 +24,7 @@ public class SpringBootContext extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(SpringBootContext.class);
 	}
+	
 	public static void main(String args[]){
 		SpringApplication.run(SpringBootContext.class, args);
 	}

@@ -1,4 +1,5 @@
 package cmcc.core.exam.serivce;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,14 @@ public class ExamResultService extends SimpleCurdService<ExamResult, Long> {
 	
 	@Autowired
 	private ExamResultRepository examResultRepository;
+	
+	public List<ExamResult> dayRankList(){
+		return this.examResultRepository.findTop10ByCreateDateBetweenOrderByScore(new Date(), new Date());
+	}
+	
+	public List<ExamResult> monthRankList(){
+		return this.examResultRepository.findTop10ByCreateDateBetweenOrderByScore(new Date(), new Date());
+	}
 	
 	public Boolean isRight(String answerids,List<Answer> answers){
 		return true;

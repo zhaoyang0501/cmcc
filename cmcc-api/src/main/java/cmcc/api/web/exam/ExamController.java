@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cmcc.api.web.exam.dto.ExamAnswer;
 import cmcc.api.web.exam.dto.ExamDto;
+import cmcc.api.web.exam.dto.ExamRankDto;
 import cmcc.api.web.exam.dto.Submit;
 import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ListResponse;
@@ -93,13 +94,29 @@ public class ExamController {
 			examResult.setCreateDate(new Date());
 			examResult.setMinute(submit.getMinute());
 			examResultService.save(examResult);
-			return new SuccessResponse();
+			return new ObjectResponse<ExamResult>(examResult);
 		}
-		
 	}
 	
+	@ApiOperation(value = "获取今日考试提交排行榜",notes="成功返回今日考试考试排行列表", response=ExamRankDto.class)
+	@RequestMapping(value = "/dayranklist/{id}", method = RequestMethod.GET)
+	public Response dayRanklist(){
+		List<ExamRankDto> dtos = new ArrayList<ExamRankDto>();
+		dtos.add(new ExamRankDto("潘朝阳","",1l,80));
+		dtos.add(new ExamRankDto("习近平","",2l,40));
+		return new ListResponse<ExamRankDto>(dtos) ;
+	}
+	/**TODO 改成*/
+	@ApiOperation(value = "获取月度考试提交排行榜",notes="成功返回今日考试考试排行列表", response=ExamRankDto.class)
+	@RequestMapping(value = "/monthranklist/{id}", method = RequestMethod.GET)
+	public Response monthRanklist(){
+		List<ExamRankDto> dtos = new ArrayList<ExamRankDto>();
+		dtos.add(new ExamRankDto("潘朝阳","",1l,80));
+		dtos.add(new ExamRankDto("习近平","",2l,40));
+		return new ListResponse<ExamRankDto>(dtos) ;
+	}
 	
-	public String getAnswersFromSubmit(Submit submit,Long qid){
+	private String getAnswersFromSubmit(Submit submit,Long qid){
 		if(submit!=null&&submit.getAnswers()!=null){
 			for(ExamAnswer a:submit.getAnswers()){
 				if(a.qid.equals(qid)){
@@ -111,12 +128,5 @@ public class ExamController {
 		return null;
 	}
 	
-	public static void main(String arg[]){
-		Long[] ids= new Long[3];
-		ids[0]=12l;
-		ids[1]=3l;
-		ids[2]=4l;
-		Arrays.sort(ids);
-		System.out.println(StringUtil.toString(ids));
-	}
+	
 }

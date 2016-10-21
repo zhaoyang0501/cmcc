@@ -13,14 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cmcc.api.web.exam.dto.ExamDto;
 import cmcc.api.web.news.dto.NewsListDto;
+import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ListResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
+import cmcc.common.dto.json.SuccessResponse;
+import cmcc.core.entity.User;
 import cmcc.core.exam.serivce.ExamService;
 import cmcc.core.news.service.NewsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import cmcc.core.news.entity.Comment;
 import cmcc.core.news.entity.News;
 import cmcc.core.news.entity.NewsCategory;;
 @Api(value = "新闻模块")
@@ -58,6 +62,27 @@ public class NewsController {
 	public Response newsdetail(@ApiParam(value = "新闻id", required = true ) @PathVariable Long id){
 		return new ObjectResponse<News>(newsService.find(id));
 	}
+	
+	@ApiOperation(value = "提交评论",notes="成功返回success", response=Response.class)
+	@RequestMapping(value = "/addComment", method = RequestMethod.GET)
+	public Response addComment(@ApiParam(value = "新闻id", required = true )  Long newsid,
+			@ApiParam(value = "评论内容", required = true )  String body,
+			@ApiParam(value = "token", required = true )  String token){
+		News news = this.newsService.find(newsid);
+		User user = (User)redisTemplate.opsForValue().get(token);
+		if(user==null)
+			return  new FailedResponse("token无效");
+		if(news==null)
+			return  new FailedResponse("被评论新闻不存在");
+		
+		Comment comment = new Comment();
+		comment.setBody(body);
+		comment.setNews(news);
+		comment.setUser(user);
+		newsService.saveComment(comment);
+		return new SuccessResponse("评论成功！");
+	}
+	
 	
 	private List<NewsListDto> convertToNewsListDto(List<News> newslist){
 		List<NewsListDto> dtos = new ArrayList<NewsListDto>();

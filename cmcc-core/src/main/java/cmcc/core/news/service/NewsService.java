@@ -7,9 +7,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -17,9 +15,11 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import cmcc.common.service.SimpleCurdService;
+import cmcc.core.news.entity.Comment;
 import cmcc.core.news.entity.News;
 import cmcc.core.news.entity.NewsCategory;
 import cmcc.core.news.repository.NewsCategoryRespository;
+import cmcc.core.news.repository.NewsCommentRespository;
 import cmcc.core.news.repository.NewsRespository;
 @Service
 public class NewsService extends SimpleCurdService<News, Long> {
@@ -30,8 +30,15 @@ public class NewsService extends SimpleCurdService<News, Long> {
 	@Autowired
 	private NewsCategoryRespository newsCategoryRespository;
 	
+	@Autowired
+	private NewsCommentRespository newsCommentRespository;
+	
 	public List<NewsCategory> findAllCategory(){
 		return (List<NewsCategory>) this.newsCategoryRespository.findAll();
+	}
+	
+	public void saveComment(Comment comment){
+		this.newsCommentRespository.save(comment);
 	}
 	
 	/***

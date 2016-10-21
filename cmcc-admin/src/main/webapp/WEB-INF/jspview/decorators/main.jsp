@@ -33,8 +33,13 @@
     <script src="${pageContext.request.contextPath}/js/plugins/toastr/toastr.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/jquerydatatable.defaults.js?sf=1"></script>
     <script>
-    <c:if test="${state=='success'}">
-	  toastr.success('${tip}');
+    <c:if test="${response!=null}">
+    	<c:if test="${response.code=='1'}">
+	  		toastr.success('${response.msg}');
+	  	</c:if>
+	  	<c:if test="${response.code!='1'}">
+  			toastr.warning('${response.msg}');
+  		</c:if>
 	 </c:if>
     $.common.setContextPath('${pageContext.request.contextPath}');
     </script>

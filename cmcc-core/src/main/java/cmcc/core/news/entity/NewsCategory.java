@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 @JsonIgnoreProperties(value={"createDate","updateDate"})
 public class NewsCategory extends BaseEntity<Long>{
 	
-	@ApiModelProperty(value="分类")
+	@ApiModelProperty(value="分类名称")
 	private String  name;
 	
 	@ApiModelProperty(value="备注")

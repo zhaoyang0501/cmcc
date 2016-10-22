@@ -78,7 +78,11 @@
                             <li>
                                 <a class="J_menuItem" href="news/news/index">新闻管理</a>
                             </li>
-                          <li>
+                             <li>
+                                <a class="J_menuItem" href="news/comment/index">评论管理</a>
+                            </li>
+                            
+                            <li>
                                 <a class="J_menuItem" href="news/create/index">发布</a>
                             </li>
                         </ul>

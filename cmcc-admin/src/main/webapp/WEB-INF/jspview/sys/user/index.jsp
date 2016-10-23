@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <link href="${pageContext.request.contextPath}/css/plugins/jsTree/style.min.css" rel="stylesheet">
 </head>
 <body >
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -11,38 +12,54 @@
                 <div class="ibox ">
                     <div class="ibox-title">
                         <h5>注册用户管理 </h5>
-                        <div class="ibox-tools">
-                        </div>
                     </div>
-                    
-                    <div class="ibox-content">
-                        <form role="form" class="form-inline">
-                            <div class="form-group">
-                                <label for="exampleInputEmail2" class="sr-only">姓名</label>
-                                <input type="text" placeholder="姓名" id="_name" class="form-control">
-                            </div>
-                            <button class="btn btn-primary" type="button" id='_search'>查询</button>
-                            <button class="btn btn-primary" type="button" id='_new'>登记</button>
-                        </form>
-                    </div>
+                   
                     
                     <div class="ibox-content ">
-                         <table ID='dt_table_view' class="table table-striped table-bordered table-hover ">
-                            <thead>
-                                <tr>
-									<th>id</th>
-									<th>手机号码</th>
-									<th>真实姓名</th>
-									<th>性别</th>
-									<th>备用电话</th>
-									<th>电子邮件</th>
-									<th>冻结</th>
-									<th>操作</th>
-								</tr>
-                            </thead>
-                       		 <tbody>
-                            </tbody>
+                     <div class="row">
+	                     <div class="col-sm-4">
+	           				<div id="jstree_demo_div">
+	           				<ul>
+							      <li>Root node 1
+							        <ul>
+							          <li id="child_node_1">Child node 1</li>
+							          <li>Child node 2</li>
+							        </ul>
+							      </li>
+							      <li>Root node 2</li>
+							    </ul>
+	           				</div>
+	          			 </div>
+          			  	
+          			  	<div class="col-sm-8">
+	                        <form role="form" class="form-inline">
+	                            <div class="form-group">
+	                                <label for="exampleInputEmail2" class="sr-only">姓名</label>
+	                                <input type="text" placeholder="姓名" id="_name" class="form-control">
+	                            </div>
+	                            <button class="btn btn-primary" type="button" id='_search'>查询</button>
+	                            <button class="btn btn-primary" type="button" id='_new'>登记</button>
+	                        </form>
+           				
+           					<table ID='dt_table_view' class="table table-striped table-bordered table-hover ">
+	                            <thead>
+	                                <tr>
+										<th>id</th>
+										<th>手机号码</th>
+										<th>真实姓名</th>
+										<th>性别</th>
+										<th>备用电话</th>
+										<th>电子邮件</th>
+										<th>冻结</th>
+										<th>操作</th>
+									</tr>
+	                            </thead>
+	                       		 <tbody>
+	                            </tbody>
                           </table>
+          			 </div>
+          			 </div>
+                         
                     </div>
                     
                 </div>
@@ -240,6 +257,20 @@
      }
     
     $(document).ready(function(){
+    	$('#jstree_demo_div').jstree({
+    		'core' : {
+    		  'data' : {
+    		    'url' : function (node) {
+    		      return node.id === '#' ?
+    		        'ajax_roots.json' :
+    		        'ajax_children.json';
+    		    },
+    		    'data' : function (node) {
+    		      return { 'id' : node.id };
+    		    }
+    		  }
+    		});
+    	
         	$("#_new").click(function(){
         		$("input[name='id']").val("");
  		    	$("input[name='chinesename']").val("");
@@ -324,6 +355,7 @@
 		     } )
         });
     </script>
+    <script src="${pageContext.request.contextPath}/js/plugins/jsTree/jstree.min.js"></script>
 </body>
-
+ 
 </html>

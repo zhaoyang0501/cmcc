@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cmcc.common.dto.json.SuccessResponse;
 import cmcc.core.news.entity.News;
@@ -23,10 +24,9 @@ public class NewsCreateController   {
 	}
 	
 	@RequestMapping(value="create",method=RequestMethod.POST)
-	public String create(Model model,News news) {
-		model.addAttribute("response",new SuccessResponse("操作成功！"));
-		model.addAttribute("categorys",newsService.findAllCategory());
+	public String create(Model model,News news,final RedirectAttributes redirectAttributes) {
 		this.newsService.save(news);
-		return "news/create/index";
+		redirectAttributes.addFlashAttribute("response", new SuccessResponse("操作成功！"));
+		 return "redirect:/news/create/index";  
 	}
 }

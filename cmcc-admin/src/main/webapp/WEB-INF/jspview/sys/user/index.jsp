@@ -6,6 +6,8 @@
     <link href="${pageContext.request.contextPath}/css/plugins/jsTree/style.min.css" rel="stylesheet">
 </head>
 <body >
+   <input id='deptid' type="hidden"/>
+		                      
     <div class="wrapper wrapper-content animated fadeInRight">
        <div class="row">
             <div class="col-sm-12">
@@ -19,15 +21,6 @@
                      <div class="row">
 	                     <div class="col-sm-4">
 	           				<div id="jstree_demo_div">
-	           				<ul>
-							      <li>Root node 1
-							        <ul>
-							          <li id="child_node_1">Child node 1</li>
-							          <li>Child node 2</li>
-							        </ul>
-							      </li>
-							      <li>Root node 2</li>
-							    </ul>
 	           				</div>
 	          			 </div>
           			  	
@@ -257,19 +250,29 @@
      }
     
     $(document).ready(function(){
-    	$('#jstree_demo_div').jstree({
-    		'core' : {
-    		  'data' : {
-    		    'url' : function (node) {
-    		      return node.id === '#' ?
-    		        'ajax_roots.json' :
-    		        'ajax_children.json';
-    		    },
-    		    'data' : function (node) {
-    		      return { 'id' : node.id };
-    		    }
-    		  }
-    		});
+		
+    	$.ajax({
+	 		   url:  $.common.getContextPath() + "/sys/user/alldeptments",
+	 		   success: function(msg){
+	 			  $('#jstree_demo_div').jstree({
+	 			 		'core' : {
+	 			 			"multiple" : false,
+	 			 		  'data' : msg
+	 			 		}}).on('changed.jstree', function (e, data) {
+	 			 			console.info(data.node.id);
+	 			 			$("#deptid").val(data.node.id);
+	 			 			 table.draw();
+	 			 		  });
+	 			   
+	 		   }
+	 	});
+    /*
+    $('#jstree_demo_div').jstree({
+ 		'core' : {
+ 		  'data' : msg.datas
+ 		});
+  });*/
+    	
     	
         	$("#_new").click(function(){
         		$("input[name='id']").val("");
@@ -349,6 +352,7 @@
         	 } ).on('preXhr.dt', function ( e, settings, data ) {
 		        	data.value = $("#_name").val();
 		        	data.columnname = 'chinesename';
+		        	data.deptid = $("#deptid").val();
 		        	return true;
 		     } ).on('xhr.dt', function ( e, settings, json, xhr ) {
 		    		 $(".dataTables_processing").hide();	

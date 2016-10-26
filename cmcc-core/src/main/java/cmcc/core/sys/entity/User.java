@@ -1,10 +1,12 @@
-package cmcc.core.entity;
+package cmcc.core.sys.entity;
 
 import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -40,6 +42,9 @@ public class User extends BaseEntity<Long> implements Serializable{
 	
 	private String headimg;
 	
+	@OneToOne
+	private Deptment deptment;
+	
 	private Integer score = 0;
 	@OneToMany
 	private Set<Role> roles;
@@ -55,6 +60,14 @@ public class User extends BaseEntity<Long> implements Serializable{
 
 	public void setIsFreeze(Boolean isFreeze) {
 		this.isFreeze = isFreeze;
+	}
+
+	public Deptment getDeptment() {
+		return deptment;
+	}
+
+	public void setDeptment(Deptment deptment) {
+		this.deptment = deptment;
 	}
 
 	public String getHeadimg() {

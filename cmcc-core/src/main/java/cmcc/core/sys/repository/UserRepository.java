@@ -1,11 +1,11 @@
-package cmcc.core.repository;
+package cmcc.core.sys.repository;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 
 import cmcc.common.repository.SimpleCurdRepository;
-import cmcc.core.entity.User;
+import cmcc.core.sys.entity.User;
 
 
 public interface UserRepository   extends SimpleCurdRepository<User ,Long>{

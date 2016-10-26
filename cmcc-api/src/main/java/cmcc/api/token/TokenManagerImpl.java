@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import cmcc.common.util.UuidGenerater;
-import cmcc.core.entity.User;
+import cmcc.core.sys.entity.User;
 
 @Service
 public class TokenManagerImpl implements TokenManager{

@@ -17,8 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cmcc.core.entity.User;
-import cmcc.core.service.sys.UserService;
+import cmcc.core.sys.entity.User;
+import cmcc.core.sys.service.UserService;
+
 
 public class MyRealm extends AuthorizingRealm {  
 	private static final Logger log = LoggerFactory.getLogger(MyRealm.class);

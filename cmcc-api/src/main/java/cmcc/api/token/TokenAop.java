@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.util.Assert;
 
-import cmcc.core.entity.User;
+import cmcc.core.sys.entity.User;
+
 
 @Aspect
 @Configuration

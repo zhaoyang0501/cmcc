@@ -1,6 +1,6 @@
 package cmcc.api.token;
 
-import cmcc.core.entity.User;
+import cmcc.core.sys.entity.User;
 
 public interface TokenManager {
 	/***

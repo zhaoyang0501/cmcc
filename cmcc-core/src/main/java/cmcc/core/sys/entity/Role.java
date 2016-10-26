@@ -1,4 +1,4 @@
-package cmcc.core.entity;
+package cmcc.core.sys.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

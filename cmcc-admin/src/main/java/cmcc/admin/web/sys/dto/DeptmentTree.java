@@ -1,6 +1,6 @@
 package cmcc.admin.web.sys.dto;
 
-import cmcc.core.entity.Deptment;
+import cmcc.core.sys.entity.Deptment;
 
 public class DeptmentTree {
 	

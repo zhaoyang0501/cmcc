@@ -6,7 +6,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import cmcc.common.entity.BaseEntity;
-import cmcc.core.entity.User;
+import cmcc.core.sys.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

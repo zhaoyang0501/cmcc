@@ -30,6 +30,11 @@
 	                                <label for="exampleInputEmail2" class="sr-only">姓名</label>
 	                                <input type="text" placeholder="姓名" id="_name" class="form-control">
 	                            </div>
+	                            <div class="form-group">
+                                   	<label class='checkbox-inline'> <input type="radio" name="isFreeze"  checked="checked"  value="false" >正常</label>
+                                   	<label class='checkbox-inline'> <input type="radio" name="isFreeze" value="true" >冻结</label>
+                           		 </div>
+                            
 	                            <button class="btn btn-primary" type="button" id='_search'>查询</button>
 	                            <button class="btn btn-primary" type="button" id='_new'>登记</button>
 	                        </form>
@@ -43,6 +48,7 @@
 										<th>性别</th>
 										<th>备用电话</th>
 										<th>电子邮件</th>
+										<th>部门组织</th>
 										<th>冻结</th>
 										<th>操作</th>
 									</tr>
@@ -105,6 +111,16 @@
 		                           			<tr>
 		                           				<td>email</td>
 		                           				<td> <input name='email'  type="text" class="form-control"></td>
+		                           			</tr>
+		                           			<tr>
+		                           				<td>部门</td>
+		                           				<td>
+												<select name='deptment.id' class=" form-control">
+												  	<c:forEach var="bean" items="${deptmentselects}">
+												  		<option value="${bean.id }">${bean.text }</option>
+												  	</c:forEach>
+												  </select>
+		                           				</td>
 		                           			</tr>
 		                           			
 											<tr>
@@ -250,7 +266,7 @@
      }
     
     $(document).ready(function(){
-		
+    	//$("select[name='deptment.id']").select2();
     	$.ajax({
 	 		   url:  $.common.getContextPath() + "/sys/user/alldeptments",
 	 		   success: function(msg){
@@ -292,7 +308,7 @@
         	table=$('#dt_table_view').DataTable( {
         		"dom": "rt<'row'<'col-sm-5'i><'col-sm-7'p>>",
 	            "ajax": {
-	                "url":  $.common.getContextPath() + "/sys/user/list",
+	                "url":  $.common.getContextPath() + "/sys/user/listall",
 	                "type": "POST",
 	                "dataSrc": "datas"
 	              },
@@ -309,6 +325,8 @@
 				},{
 					"data" : "email",
 				},{
+					"data" : "deptment.name",
+				},{
 					"data" : "isFreeze",
 				},{
 					"data" : "id",
@@ -317,12 +335,12 @@
 								{
 								    "render": function ( data, type, row ) {
 								        if(!data)
-								        	return "<span class='label label-primary'>正常 </span>";
+								        	return "<span class='label label-primary '>正常 </span>";
 								        else
-								        	return 	"<span class='label label-danger '>冻结 </span>";
+								        	return 	"<span class='label  label-danger'> 冻结</span>";
 								        	
 								    },
-								    "targets":6
+								    "targets":7
 								}, 
 				                {
 				                    "render": function ( data, type, row ) {
@@ -339,7 +357,7 @@
 				                    
 				                       
 				                    },
-				                    "targets":7
+				                    "targets":8
 				                }
 				               
 				            ],
@@ -351,8 +369,8 @@
         		} 
         	 } ).on('preXhr.dt', function ( e, settings, data ) {
 		        	data.value = $("#_name").val();
-		        	data.columnname = 'chinesename';
 		        	data.deptid = $("#deptid").val();
+		        	data.isFreeze = $("input[name='isFreeze']:checked").val();;
 		        	return true;
 		     } ).on('xhr.dt', function ( e, settings, json, xhr ) {
 		    		 $(".dataTables_processing").hide();	

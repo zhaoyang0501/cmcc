@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import cmcc.common.entity.BaseEntity;
-import cmcc.core.entity.User;
+import cmcc.core.sys.entity.User;
 
 @Entity
 @Table(name = "t_exam_examresult")

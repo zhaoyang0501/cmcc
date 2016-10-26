@@ -1,17 +1,18 @@
 package cmcc.api.web;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ObjectResponse;
@@ -21,9 +22,6 @@ import cmcc.common.exception.AlreadyExistedException;
 import cmcc.common.util.UuidGenerater;
 import cmcc.core.sys.entity.User;
 import cmcc.core.sys.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @Api(value = "首页")
 @RestController
@@ -72,16 +70,49 @@ public class IndexController {
 		return new SuccessResponse();
 	}
 	
-	public Response bindSendMail(String mail,@ApiParam(value = "token", required = true) @RequestParam String token ){
-		return new SuccessResponse();
+	@ApiOperation(value = "绑定139验证验证码是否正确", notes = "成功返回success")
+	@RequestMapping(value = "/validateCode", method = RequestMethod.POST)
+	public Response validateCode(@ApiParam(value = "验证码", required = true) @RequestParam String code,
+			@ApiParam(value = "token", required = true) @RequestParam String token){
+		
+		User user = userService.getUserByToken(token);
+		
+		if(user==null){
+			return new FailedResponse("token无效请登录");
+		}else{
+			if(userService.isCodeSucess(user, code))
+				return new SuccessResponse("验证通过");
+			else
+				return new FailedResponse("验证码无效");
+		}
+		
+	}
+	
+	@ApiOperation(value = "绑定手机操作发送验证码邮件通知", notes = "成功返回success")
+	@RequestMapping(value = "/bindSendMail", method = RequestMethod.POST)
+	public Response bindSendMail(@ApiParam(value = "邮箱地址", required = true) @RequestParam String mail,
+			@ApiParam(value = "token", required = true) @RequestParam String token ){
+		
+		User user = userService.getUserByToken(token);
+		
+		if(user==null){
+			return new FailedResponse("token无效请登录");
+		}else{
+			try {
+				userService.BindMailSendCode(user, mail);
+			} catch (Exception e) {
+				return new FailedResponse(e.getMessage());
+			}
+		}
+		return new SuccessResponse("邮件发送成功！");
 	}
 	
 	
 	@ApiOperation(value = "密码重置", notes = "需要token，成功返回success")
 	@RequestMapping(value = "/resetpw", method = RequestMethod.POST)
 	public Response	resetpw(@ApiParam(value = "token", required = true) @RequestParam String token,
-			@ApiParam(value = "新密码", required = true) String password,
-			@ApiParam(value = "密码重复", required = true) String passwordagain) {
+			@ApiParam(value = "新密码", required = true)  @RequestParam String password,
+			@ApiParam(value = "密码重复", required = true) @RequestParam  String passwordagain) {
 		if(!isPasswordEnable(password,passwordagain))
 			return new FailedResponse("两次密码不一致");
 		

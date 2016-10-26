@@ -18,10 +18,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import cmcc.common.exception.AlreadyExistedException;
 import cmcc.common.service.SimpleCurdService;
+import cmcc.common.util.MailSenderUtil;
+import cmcc.common.util.MailSenderUtilImpl;
 import cmcc.core.sys.entity.Role;
 import cmcc.core.sys.entity.User;
 import cmcc.core.sys.repository.RoleRepository;
@@ -31,16 +34,27 @@ import cmcc.core.sys.repository.UserRepository;
 public class UserService extends SimpleCurdService<User, Long> {
 	
 	public final static String BIND_MAIL_SEND = "BIND_MAIL_SEND";
+	
 	public final static String BIND_MAIL_CODE = "BIND_MAIL_CODE";
+	
+	public final static String CODE_SUBJECT = "您在培训系统中绑定手机的验证码";
 	
 	@Autowired
     private RedisTemplate<Object,Object> redisTemplate;
+	
+	@Autowired
+	private MailSenderUtil mailSenderUtil;
 	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	public User getUserByToken(String token){
+		User user = (User)redisTemplate.opsForValue().get(token);
+		return user;
+	}
 	
 	@Transactional
 	public User registerUser(String username,String password,String chinesename) throws AlreadyExistedException{
@@ -76,6 +90,7 @@ public class UserService extends SimpleCurdService<User, Long> {
         return result;
    } 
 	
+	@Async
 	public void BindMailSendCode(User user,String mail){
 		String sendkey = user.getId()+"_"+BIND_MAIL_SEND;
 		String codekey = user.getId()+"_"+BIND_MAIL_CODE;
@@ -84,15 +99,25 @@ public class UserService extends SimpleCurdService<User, Long> {
 		}else{
 			redisTemplate.opsForValue().set(sendkey, new Date());
 			redisTemplate.expire(sendkey, 1, TimeUnit.MINUTES);
-			//todo 发邮件
+			
 			int code = (int)(Math.random()*9000)+1000;
-			redisTemplate.opsForValue().set(codekey, new Date());
-			redisTemplate.expire(sendkey, 10, TimeUnit.MINUTES);
+			
+			this.mailSenderUtil.sendMail(mail, CODE_SUBJECT, "您绑定手机的验证码是："+code+"。1小时后过期");
+			
+			redisTemplate.opsForValue().set(codekey, code);
+			redisTemplate.expire(sendkey, 1, TimeUnit.HOURS);
 		}
 	}
 	
-	public void isCodeSucess(){
+	public Boolean isCodeSucess(User user,String code){
+		String codekey = user.getId()+"_"+BIND_MAIL_CODE;
+		String codeInRedis = (String)redisTemplate.opsForValue().get(codekey);
 		
+		if(codeInRedis!=null&&codeInRedis.equals(code)){
+			redisTemplate.delete(codekey);
+			return true;
+		}else
+			return false;
 	}
 	/***
 	 * 登录不成功返回null

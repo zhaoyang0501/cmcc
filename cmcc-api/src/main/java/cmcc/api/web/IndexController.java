@@ -72,6 +72,11 @@ public class IndexController {
 		return new SuccessResponse();
 	}
 	
+	public Response bindSendMail(String mail,@ApiParam(value = "token", required = true) @RequestParam String token ){
+		return new SuccessResponse();
+	}
+	
+	
 	@ApiOperation(value = "密码重置", notes = "需要token，成功返回success")
 	@RequestMapping(value = "/resetpw", method = RequestMethod.POST)
 	public Response	resetpw(@ApiParam(value = "token", required = true) @RequestParam String token,

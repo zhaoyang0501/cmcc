@@ -119,6 +119,7 @@
                         </a>
                         <ul class="nav nav-second-level">
                             <li><a class="J_menuItem" href="sys/user/index">员工管理</a></li>
+                                <li><a class="J_menuItem" href="sys/deptment/index">部门管理</a></li>
                         </ul>
                     </li>
                 </ul>

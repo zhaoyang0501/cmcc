@@ -20,6 +20,11 @@ public class Deptment extends BaseEntity<Long> {
 	
 	private String code;
 	
+	private String manger;
+	
+	private String shortName;
+	
+
 	@ManyToOne
     @JoinColumn(name = "parent_id")
 	private Deptment parent;
@@ -69,4 +74,19 @@ public class Deptment extends BaseEntity<Long> {
 	}
 
 	
+	public String getManger() {
+		return manger;
+	}
+
+	public void setManger(String manger) {
+		this.manger = manger;
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
 }

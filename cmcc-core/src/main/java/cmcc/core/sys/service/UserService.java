@@ -105,7 +105,7 @@ public class UserService extends SimpleCurdService<User, Long> {
 			this.mailSenderUtil.sendMail(mail, CODE_SUBJECT, "您绑定手机的验证码是："+code+"。1小时后过期");
 			
 			redisTemplate.opsForValue().set(codekey, code);
-			redisTemplate.expire(sendkey, 1, TimeUnit.HOURS);
+			redisTemplate.expire(codekey, 1, TimeUnit.HOURS);
 		}
 	}
 	

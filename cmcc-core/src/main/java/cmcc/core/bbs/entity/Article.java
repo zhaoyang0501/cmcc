@@ -1,7 +1,10 @@
 package cmcc.core.bbs.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,6 +38,17 @@ public class Article extends BaseEntity<Long>{
 	@ApiModelProperty(value="发表人")
 	@OneToOne
 	private User user;
+	
+	@OneToMany( mappedBy = "article")
+	public List<Comment> comments;
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
 	public String getTitle() {
 		return title;

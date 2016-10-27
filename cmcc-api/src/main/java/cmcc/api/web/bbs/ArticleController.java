@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cmcc.api.token.TokenValid;
+import cmcc.api.web.news.dto.NewsListDto;
+import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ListResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
@@ -21,6 +23,7 @@ import io.swagger.annotations.ApiParam;
 
 @Api(value = "论坛")
 @RestController
+@RequestMapping("bbs")
 public class ArticleController {
 	
 	@Autowired
@@ -29,7 +32,7 @@ public class ArticleController {
 	@Autowired
 	private BbsCategoryService bbsCategoryService;
 	
-	@TokenValid
+	
 	@ApiOperation(value = "获取所有板块",notes="成功返回板块列表",response=BbsCategory.class)
 	@RequestMapping(value = "/allcategory", method = RequestMethod.GET)
 	public ListResponse<BbsCategory> AllCategory(){
@@ -42,11 +45,24 @@ public class ArticleController {
 		return new ObjectResponse<Article>(articleService.find(id));
 	}
 	
+	
+	@ApiOperation(value = "获取全部分类下新闻",notes="获取精彩热帖", response=NewsListDto.class)
+	@RequestMapping(value = "/hotarticle/{page}", method = RequestMethod.GET)
+	public Response indexNews( @ApiParam(value = "页码从1开始", required = true ) @PathVariable Integer page){
+		//return new ListResponse<NewsListDto>(convertToNewsListDto( newsService.findAll(page, null))); 
+		return null;
+	}
+	
+	
+	
 	@ApiOperation(value = "发帖")
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public Response createArticle(@ApiParam(value = "标题", required = true) String title,
-			@ApiParam(value = "内容", required = true) String body){
-		
+	public Response createArticle(@ApiParam(value = "标题", required = true) @RequestParam String title,
+			@ApiParam(value = "内容", required = true) String body,
+			@ApiParam(value = "分类id", required = true) @RequestParam  Long categoryid){
+		BbsCategory category = bbsCategoryService.find(categoryid);
+		if(category == null)
+			return  new FailedResponse("板块不存在");
 		Article article = new Article();
 		article.setBody(body);
 		article.setTitle(title);

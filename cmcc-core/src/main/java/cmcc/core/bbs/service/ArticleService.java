@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import cmcc.common.service.SimpleCurdService;
 import cmcc.core.bbs.entity.Article;
+import cmcc.core.bbs.entity.Comment;
 import cmcc.core.bbs.repository.ArticleRepository;
 import cmcc.core.bbs.repository.CommentRepository;
 
@@ -31,6 +32,9 @@ public class ArticleService extends SimpleCurdService<Article, Long> {
 		this.commentRepository.delete(id);
 	}
 	
+	public void saveComment(Comment comment){
+		this.commentRepository.save(comment);
+	}
 	public Page<Article> findAll(final int pageNumber, final int pageSize,final String title,final Long categoryid){
         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
         Specification<Article> spec = new Specification<Article>() {

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cmcc.admin.web.sys.dto.DeptmentSelect;
@@ -14,7 +13,6 @@ import cmcc.common.dto.json.DataTableResponse;
 import cmcc.common.dto.json.Response;
 import cmcc.common.web.AbstractBaseCURDController;
 import cmcc.core.sys.entity.Deptment;
-import cmcc.core.sys.entity.User;
 import cmcc.core.sys.service.DeptmentService;
 
 @Controller

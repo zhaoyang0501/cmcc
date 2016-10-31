@@ -39,7 +39,7 @@ public class NewsController {
 	private NewsService newsService;
 	
 	@ApiOperation(value = "获取全部分类下新闻",notes="获取全部分类下新闻", response=NewsListDto.class)
-	@RequestMapping(value = "/news/{page}", method = RequestMethod.GET)
+	@RequestMapping(value = "/news/page/{page}", method = RequestMethod.GET)
 	public Response indexNews( @ApiParam(value = "页码从1开始", required = true ) @PathVariable Integer page){
 		return new ListResponse<NewsListDto>(convertToNewsListDto( newsService.findAll(page, null))); 
 	}
@@ -64,7 +64,7 @@ public class NewsController {
 	}
 	
 	@ApiOperation(value = "提交评论",notes="成功返回success", response=Response.class)
-	@RequestMapping(value = "/addComment", method = RequestMethod.GET)
+	@RequestMapping(value = "/addComment", method = RequestMethod.POST)
 	public Response addComment(@ApiParam(value = "新闻id", required = true )  Long newsid,
 			@ApiParam(value = "评论内容", required = true )  String body,
 			@ApiParam(value = "token", required = true )  String token){

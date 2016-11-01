@@ -1,5 +1,9 @@
 package cmcc.api.web.news;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,22 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import cmcc.api.web.exam.dto.ExamDto;
 import cmcc.api.web.news.dto.NewsListDto;
 import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ListResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
 import cmcc.common.dto.json.SuccessResponse;
-import cmcc.core.exam.serivce.ExamService;
-import cmcc.core.news.service.NewsService;
-import cmcc.core.sys.entity.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import cmcc.core.news.entity.Comment;
 import cmcc.core.news.entity.News;
-import cmcc.core.news.entity.NewsCategory;;
+import cmcc.core.news.entity.NewsCategory;
+import cmcc.core.news.service.NewsService;
+import cmcc.core.sys.entity.User;
 @Api(value = "新闻模块")
 @RestController
 @RequestMapping("news")

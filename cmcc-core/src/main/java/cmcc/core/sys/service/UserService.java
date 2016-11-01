@@ -37,7 +37,14 @@ public class UserService extends SimpleCurdService<User, Long> {
 	
 	public final static String BIND_MAIL_CODE = "BIND_MAIL_CODE";
 	
+	
+	public final static String FORGET_SEND = "FORGET_SEND";
+	
+	public final static String FORGET_CODE = "FORGET_CODE";
+	
+	
 	public final static String CODE_SUBJECT = "您在培训系统中绑定手机的验证码";
+	public final static String FORGET_SUBJECT = "您在培训系统中找回密码的验证码";
 	
 	@Autowired
     private RedisTemplate<Object,Object> redisTemplate;
@@ -90,7 +97,24 @@ public class UserService extends SimpleCurdService<User, Long> {
         return result;
    } 
 	
-	@Async
+	public void forgetSendCode(User user){
+		String sendkey = user.getId()+"_"+FORGET_SEND;
+		String codekey = user.getId()+"_"+FORGET_CODE;
+		if(redisTemplate.opsForValue().get(sendkey)!=null){
+			throw new RuntimeException("请一分钟后再试");
+		}else{
+			redisTemplate.opsForValue().set(sendkey, new Date());
+			redisTemplate.expire(sendkey, 1, TimeUnit.MINUTES);
+			
+			int code = (int)(Math.random()*9000)+1000;
+			
+			this.mailSenderUtil.sendMail(user.getUsername()+"@139.com", CODE_SUBJECT, "您找回密码的的验证码是："+code+"1小时后过期");
+			
+			redisTemplate.opsForValue().set(codekey, String.valueOf(code));
+			redisTemplate.expire(codekey, 1, TimeUnit.HOURS);
+		}
+	}
+	
 	public void BindMailSendCode(User user,String mail){
 		String sendkey = user.getId()+"_"+BIND_MAIL_SEND;
 		String codekey = user.getId()+"_"+BIND_MAIL_CODE;
@@ -102,11 +126,22 @@ public class UserService extends SimpleCurdService<User, Long> {
 			
 			int code = (int)(Math.random()*9000)+1000;
 			
-			this.mailSenderUtil.sendMail(mail, CODE_SUBJECT, "您绑定手机的验证码是："+code+"。1小时后过期");
+			this.mailSenderUtil.sendMail(mail, CODE_SUBJECT, "您绑定手机的验证码是："+code+"1小时后过期");
 			
-			redisTemplate.opsForValue().set(codekey, code);
+			redisTemplate.opsForValue().set(codekey, String.valueOf(code));
 			redisTemplate.expire(codekey, 1, TimeUnit.HOURS);
 		}
+	}
+	
+	public Boolean isForgetCodeSucess(User user,String code){
+		String codekey = user.getId()+"_"+FORGET_CODE;
+		String codeInRedis = (String)redisTemplate.opsForValue().get(codekey);
+		
+		if(codeInRedis!=null&&codeInRedis.equals(code)){
+			redisTemplate.delete(codekey);
+			return true;
+		}else
+			return false;
 	}
 	
 	public Boolean isCodeSucess(User user,String code){

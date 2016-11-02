@@ -70,9 +70,9 @@ public class IndexController {
 		return new SuccessResponse();
 	}
 	
-	@ApiOperation(value = "绑定139验证验证码是否正确", notes = "成功返回success")
-	@RequestMapping(value = "/validateCode", method = RequestMethod.POST)
-	public Response validateCode(@ApiParam(value = "验证码", required = true) @RequestParam String code,
+	@ApiOperation(value = "验证绑定139验证验证码是否正确", notes = "成功返回success")
+	@RequestMapping(value = "/bindValidate", method = RequestMethod.POST)
+	public Response bindValidate(@ApiParam(value = "验证码", required = true) @RequestParam String code,
 			@ApiParam(value = "token", required = true) @RequestParam String token){
 		
 		User user = userService.getUserByToken(token);
@@ -85,7 +85,6 @@ public class IndexController {
 			else
 				return new FailedResponse("验证码无效");
 		}
-		
 	}
 	
 	@ApiOperation(value = "绑定手机操作发送验证码邮件通知", notes = "成功返回success")
@@ -107,7 +106,45 @@ public class IndexController {
 		return new SuccessResponse("邮件发送成功！");
 	}
 	
+	@ApiOperation(value = "忘记密码发送验证码邮件通知", notes = "成功返回success")
+	@RequestMapping(value = "/forgetSendMail", method = RequestMethod.POST)
+	public Response forgetSendMail(@ApiParam(value = "用户名", required = true) @RequestParam String username){
+		
+		User user = userService.findByUsername(username);
+		
+		if(user==null){
+			return new FailedResponse("账号不存在");
+		}else{
+			try {
+				userService.forgetSendCode(user);
+			} catch (Exception e) {
+				return new FailedResponse(e.getMessage());
+			}
+		}
+		return new SuccessResponse("邮件发送成功！");
+	}
 	
+	@ApiOperation(value = "忘记密码验证验证码是否正确", notes = "成功返回token")
+	@RequestMapping(value = "/forgetValidate", method = RequestMethod.POST)
+	public Response forgetValidate(@ApiParam(value = "验证码", required = true) @RequestParam String code,
+			@ApiParam(value = "用户名", required = true) @RequestParam String username){
+		
+		User user = userService.findByUsername(username);
+		
+		if(user==null){
+			return new FailedResponse("账号不存在");
+		}else{
+			if(userService.isForgetCodeSucess(user, code)){
+				String token =UuidGenerater.createUuid();
+				redisTemplate.opsForValue().set(token,user);	
+				redisTemplate.expire(token, 1, TimeUnit.HOURS);
+				return new ObjectResponse<String>(token);
+			}
+				return new FailedResponse("验证码无效");
+		}
+		
+		
+	}
 	@ApiOperation(value = "密码重置", notes = "需要token，成功返回success")
 	@RequestMapping(value = "/resetpw", method = RequestMethod.POST)
 	public Response	resetpw(@ApiParam(value = "token", required = true) @RequestParam String token,

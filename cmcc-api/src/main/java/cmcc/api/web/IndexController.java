@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cmcc.api.web.center.UserInfoDto;
 import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
@@ -33,6 +34,38 @@ public class IndexController {
 	@Autowired
 	private UserService userService;
 	
+	
+	@ApiOperation(value = "获取用户信息并延长token有效期", notes = "成功返回success",response=User.class)
+	@RequestMapping(value = "/user/{token}", method = RequestMethod.POST)
+	public Response getuser(@ApiParam(value = "token", required = true) @RequestParam String token) {
+
+		User user = userService.getUserByToken(token);
+		
+		if(user==null){
+			return new FailedResponse("token无效");
+		}else{
+			return new ObjectResponse<User>(user);
+		}
+	}
+	@ApiOperation(value = "用户登录", notes = "成功返回用户token",response=UserInfoDto.class)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public Response login(
+			@ApiParam(value = "139邮箱或者工号", required = true) @RequestParam String username, 
+			@ApiParam(value = "用户密码", required = true)  @RequestParam  String password) {
+		/***TODO 工号登录*/
+		User user = this.userService.login(username, password);
+		if(user!=null){
+			String token =UuidGenerater.createUuid();
+			redisTemplate.opsForValue().set(token,user);	
+			redisTemplate.expire(token, 1, TimeUnit.HOURS);
+			return new ObjectResponse<UserInfoDto>(new UserInfoDto(user,token));
+		}else{
+			return new FailedResponse("用户名密码不正确");
+		}
+		
+	}
+	
+	
 	@ApiOperation(value = "用户注册", notes = "成功返回success")
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public Response login(@ApiParam(value = "用户名(手机号码)", required = true)@RequestParam String username,
@@ -46,22 +79,6 @@ public class IndexController {
 		return new SuccessResponse();
 	}
 
-	@ApiOperation(value = "用户登录", notes = "成功返回用户token")
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Response login(
-			@ApiParam(value = "用户名(手机号码)", required = true) @RequestParam String username, 
-			@ApiParam(value = "用户密码", required = true)  @RequestParam  String password) {
-		User user = this.userService.login(username, password);
-		if(user!=null){
-			String token =UuidGenerater.createUuid();
-			redisTemplate.opsForValue().set(token,user);	
-			redisTemplate.expire(token, 1, TimeUnit.HOURS);
-			return new ObjectResponse<String>(token);
-		}else{
-			return new FailedResponse("用户名密码不正确");
-		}
-		
-	}
 
 	@ApiOperation(value = "用户退出", notes = "成功返回success")
 	@RequestMapping(value = "/loginout", method = RequestMethod.POST)
@@ -80,8 +97,11 @@ public class IndexController {
 		if(user==null){
 			return new FailedResponse("token无效请登录");
 		}else{
-			if(userService.isCodeSucess(user, code))
+			if(userService.isCodeSucess(user, code)){
+				user.setIsBind(true);
+				userService.save(user);
 				return new SuccessResponse("验证通过");
+			}
 			else
 				return new FailedResponse("验证码无效");
 		}

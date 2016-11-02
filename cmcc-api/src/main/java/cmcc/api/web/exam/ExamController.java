@@ -1,5 +1,9 @@
 package cmcc.api.web.exam;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -22,7 +26,6 @@ import cmcc.common.dto.json.FailedResponse;
 import cmcc.common.dto.json.ListResponse;
 import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
-import cmcc.common.dto.json.SuccessResponse;
 import cmcc.common.util.StringUtil;
 import cmcc.core.exam.entity.Exam;
 import cmcc.core.exam.entity.ExamResult;
@@ -31,9 +34,6 @@ import cmcc.core.exam.entity.ResultItem;
 import cmcc.core.exam.serivce.ExamResultService;
 import cmcc.core.exam.serivce.ExamService;
 import cmcc.core.sys.entity.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
 @Api(value = "趣味答题")
 @RestController
@@ -50,7 +50,7 @@ public class ExamController {
 	private ExamResultService examResultService;
 	
 	@ApiOperation(value = "获取所有有效试卷",notes="成功返回试卷数组列表", response=ExamDto.class)
-	@RequestMapping(value = "/allexams", method = RequestMethod.GET)
+	@RequestMapping(value = "/exams/enable", method = RequestMethod.GET)
 	public Response allexams(){
 		List<Exam> exams = examService.findEnableExam();
 		List<ExamDto> examdtos = new ArrayList<ExamDto>();
@@ -99,7 +99,7 @@ public class ExamController {
 	}
 	
 	@ApiOperation(value = "获取今日考试提交排行榜",notes="成功返回今日考试考试排行列表", response=ExamRankDto.class)
-	@RequestMapping(value = "/dayranklist/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ranklist/day", method = RequestMethod.GET)
 	public Response dayRanklist(){
 		List<ExamRankDto> dtos = new ArrayList<ExamRankDto>();
 		dtos.add(new ExamRankDto("潘朝阳","",1l,80));
@@ -107,8 +107,8 @@ public class ExamController {
 		return new ListResponse<ExamRankDto>(dtos) ;
 	}
 	/**TODO 改成*/
-	@ApiOperation(value = "获取月度考试提交排行榜",notes="成功返回今日考试考试排行列表", response=ExamRankDto.class)
-	@RequestMapping(value = "/monthranklist/{id}", method = RequestMethod.GET)
+	@ApiOperation(value = "获取月度考试提交排行榜",notes="成功返回当月考试考试排行列表", response=ExamRankDto.class)
+	@RequestMapping(value = "/ranklist/month", method = RequestMethod.GET)
 	public Response monthRanklist(){
 		List<ExamRankDto> dtos = new ArrayList<ExamRankDto>();
 		dtos.add(new ExamRankDto("潘朝阳","",1l,80));

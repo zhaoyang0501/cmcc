@@ -5,7 +5,7 @@ public class FailedResponse implements Response {
 	private String msg;
 
 	public FailedResponse() {
-		this.code = "0";
+		this.code = "-1";
 		this.msg = "failed";
 	}
 

@@ -14,8 +14,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import cmcc.common.service.SimpleCurdService;
-import cmcc.core.exam.entity.Category;
 import cmcc.core.exam.entity.Question;
+import cmcc.core.exam.entity.QuestionCategory;
 import cmcc.core.exam.repository.QuestionRepository;
 
 @Service
@@ -24,7 +24,7 @@ public class QuestionService extends SimpleCurdService<Question, Long> {
 	@Autowired
 	private QuestionRepository questionRepository;
 	
-	public Page<Question> findAll(final int pageNumber, final int pageSize,final String name,final Category category){
+	public Page<Question> findAll(final int pageNumber, final int pageSize,final String name,final QuestionCategory category){
         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
         Specification<Question> spec = new Specification<Question>() {
              public Predicate toPredicate(Root<Question> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
@@ -33,7 +33,7 @@ public class QuestionService extends SimpleCurdService<Question, Long> {
                   predicate.getExpressions().add(cb.like(root.get("title").as(String.class), "%"+name+"%"));
              }
              if (category!=null) {
-                 predicate.getExpressions().add(cb.equal(root.get("category").as(Category.class),category));
+                 predicate.getExpressions().add(cb.equal(root.get("category").as(QuestionCategory.class),category));
             }
              return predicate;
              }

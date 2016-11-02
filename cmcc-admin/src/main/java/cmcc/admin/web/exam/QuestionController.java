@@ -15,7 +15,9 @@ import cmcc.common.web.AbstractBaseCURDController;
 import cmcc.core.exam.entity.Answer;
 import cmcc.core.exam.entity.Category;
 import cmcc.core.exam.entity.Question;
+import cmcc.core.exam.entity.QuestionCategory;
 import cmcc.core.exam.serivce.ExamCategoryService;
+import cmcc.core.exam.serivce.QuestionCategoryService;
 import cmcc.core.exam.serivce.QuestionService;
 
 @Controller
@@ -23,7 +25,7 @@ import cmcc.core.exam.serivce.QuestionService;
 public class QuestionController extends AbstractBaseCURDController<Question,Long>  {
 	
 	@Autowired
-	private ExamCategoryService examCategoryService;
+	private QuestionCategoryService questionCategoryService;
 	
 	@Override
 	public QuestionService getSimpleCurdService() {
@@ -39,7 +41,7 @@ public class QuestionController extends AbstractBaseCURDController<Question,Long
 	@RequestMapping("index")
 	public String index(Model model) {
 		model.addAttribute("levels", cmcc.core.exam.enums.LevelEnum.values());
-		model.addAttribute("categorys",examCategoryService.findAll());
+		model.addAttribute("categorys",questionCategoryService.findAll());
 		model.addAttribute("types", cmcc.core.exam.enums.QuestionTypeEnum.values());
 		return this.getBasePath()+"/index";
 	}
@@ -51,7 +53,7 @@ public class QuestionController extends AbstractBaseCURDController<Question,Long
 		for(Answer answer:m.getAnswers()){
 			answer.setQuestion(m);
 		}
-		m.setCategory(examCategoryService.find(m.getCategory().getId()));
+		m.setCategory(questionCategoryService.find(m.getCategory().getId()));
 		getSimpleCurdService().save(m);
 		return new SuccessResponse();
 	}
@@ -61,7 +63,7 @@ public class QuestionController extends AbstractBaseCURDController<Question,Long
 	public Response listall(Integer start, Integer length, String title, Long categoryid) {
 		int pageNumber = (int) (start / length) + 1;
 		int pageSize = length;
-		Category category = categoryid==null?null:examCategoryService.find(categoryid);
+		QuestionCategory category = categoryid==null?null:questionCategoryService.find(categoryid);
 		Page<Question> m = getSimpleCurdService().findAll(pageNumber, pageSize, title,category);
 		return new DataTableResponse<Question>( m.getContent(),(int) m.getTotalElements() );
 	}

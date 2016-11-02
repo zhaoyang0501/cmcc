@@ -1,9 +1,5 @@
 package cmcc.api.web.exam;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -28,12 +24,17 @@ import cmcc.common.dto.json.ObjectResponse;
 import cmcc.common.dto.json.Response;
 import cmcc.common.util.StringUtil;
 import cmcc.core.exam.entity.Exam;
+import cmcc.core.exam.entity.ExamCategory;
 import cmcc.core.exam.entity.ExamResult;
 import cmcc.core.exam.entity.Question;
 import cmcc.core.exam.entity.ResultItem;
+import cmcc.core.exam.serivce.ExamCategoryService;
 import cmcc.core.exam.serivce.ExamResultService;
 import cmcc.core.exam.serivce.ExamService;
 import cmcc.core.sys.entity.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Api(value = "趣味答题")
 @RestController
@@ -47,7 +48,29 @@ public class ExamController {
 	private ExamService examService;
 	
 	@Autowired
+	private ExamCategoryService examCategoryService;
+	
+	@Autowired
 	private ExamResultService examResultService;
+	
+	@ApiOperation(value = "获取所有分类",notes="获取所有分类", response=ExamCategory.class)
+	@RequestMapping(value = "/categorys", method = RequestMethod.GET)
+	public Response categorys(){
+		return new ListResponse<ExamCategory>(examCategoryService.findAll());
+	}
+	
+	
+	@ApiOperation(value = "获取某个考试类别下的所有有效试卷",notes="成功返回试卷数组列表", response=ExamDto.class)
+	@RequestMapping(value = "/exams/category/{categoryid}", method = RequestMethod.GET)
+	public Response category(@ApiParam(value = "分类id", required = true ) @PathVariable Long categoryid){
+		List<Exam> exams = examService.findByCategory(categoryid);
+		List<ExamDto> examdtos = new ArrayList<ExamDto>();
+		for(Exam exam:exams){
+			examdtos.add(new ExamDto(exam));
+		}
+		return new ListResponse<ExamDto>(examdtos);
+	}
+	
 	
 	@ApiOperation(value = "获取所有有效试卷",notes="成功返回试卷数组列表", response=ExamDto.class)
 	@RequestMapping(value = "/exams/enable", method = RequestMethod.GET)

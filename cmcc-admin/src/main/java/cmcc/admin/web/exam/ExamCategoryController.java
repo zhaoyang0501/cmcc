@@ -5,10 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cmcc.common.web.AbstractBaseCURDController;
 import cmcc.core.exam.entity.Category;
+import cmcc.core.exam.entity.QuestionCategory;
 
 @Controller
 @RequestMapping("exam/category")
-public class ExamCategoryController extends AbstractBaseCURDController<Category,Long>  {
+public class ExamCategoryController extends AbstractBaseCURDController<QuestionCategory,Long>  {
 	
 	@Override
 	public String getBasePath() {

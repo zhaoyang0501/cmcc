@@ -6,4 +6,6 @@ import cmcc.core.exam.entity.Exam;
 public interface ExamRepository   extends SimpleCurdRepository<Exam ,Long>{
 	
 	public List<Exam> findByIsEnable(Boolean isEnable);
+	
+	public List<Exam> findByExamCategoryIdAndIsEnable(Long categoryid,Boolean isEnable);
 }

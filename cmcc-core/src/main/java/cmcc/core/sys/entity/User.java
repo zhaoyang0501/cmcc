@@ -4,25 +4,28 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cmcc.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(name = "t_sys_user")
+@Table(name = "t_sys_user",uniqueConstraints={@UniqueConstraint(columnNames = {"username", "empid"})})
 public class User extends BaseEntity<Long> implements Serializable{
 	
 	private static final long serialVersionUID = 2927194419168198403L;
 	
 	public static final String DEFAULT_PASSWORD="123456";
 	
+	@ApiModelProperty(value="用户名（139邮箱）")
 	private String username;
 	
+	@ApiModelProperty(hidden=true)
 	@JsonIgnore
 	private String password;
 	
@@ -30,25 +33,40 @@ public class User extends BaseEntity<Long> implements Serializable{
 	
 	private String salt;
 	
+	@ApiModelProperty(value="备注")
 	private String remark;
 	
+	@ApiModelProperty(value="电话")
 	private String tel;
 	
+	@ApiModelProperty(value="姓名/昵称")
 	private String chinesename ="";
 	
+	@ApiModelProperty(value="性别")
 	private String sex;
 	
-	private Boolean isFreeze;
+	@ApiModelProperty(value="是否冻结")
+	private Boolean isFreeze = false;
 	
+	@ApiModelProperty(value="是否绑定邮箱")
+	private Boolean isBind =false;
+	
+	@ApiModelProperty(value="头像")
 	private String headimg;
 	
+	@ApiModelProperty(value="工号")
+	private String empid;
+	
+	@ApiModelProperty(value="部门")
 	@OneToOne
 	private Deptment deptment;
 	
+	@ApiModelProperty(value="积分")
 	private Integer score = 0;
+	
+	@ApiModelProperty(hidden=true)
 	@OneToMany
 	private Set<Role> roles;
-	
 
 	public Set<Role> getRoles() {
 		return roles;
@@ -58,8 +76,24 @@ public class User extends BaseEntity<Long> implements Serializable{
 		return isFreeze;
 	}
 
+	public Boolean getIsBind() {
+		return isBind;
+	}
+
+	public void setIsBind(Boolean isBind) {
+		this.isBind = isBind;
+	}
+
 	public void setIsFreeze(Boolean isFreeze) {
 		this.isFreeze = isFreeze;
+	}
+
+	public String getEmpid() {
+		return empid;
+	}
+
+	public void setEmpid(String empid) {
+		this.empid = empid;
 	}
 
 	public Deptment getDeptment() {

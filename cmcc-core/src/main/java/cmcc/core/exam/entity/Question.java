@@ -40,13 +40,13 @@ public class Question  extends BaseEntity<Long>{
 	
 	@ManyToOne
 	@ApiModelProperty(value="题目分类")
-	private Category category;
+	private QuestionCategory category;
 	
-	public Category getCategory() {
+	public QuestionCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(Category category) {
+	public void setCategory(QuestionCategory category) {
 		this.category = category;
 	}
 

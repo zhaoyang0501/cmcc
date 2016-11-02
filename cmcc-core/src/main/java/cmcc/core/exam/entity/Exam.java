@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,6 +38,16 @@ public class Exam extends BaseEntity<Long> {
 	@ApiModelProperty(name="题目",value="题目")
 	@OneToMany( fetch = FetchType.LAZY)  
 	private List<Question> questions ;
+	
+	@ManyToOne
+	private ExamCategory examCategory;
+	
+	public ExamCategory getExamCategory() {
+		return examCategory;
+	}
+	public void setExamCategory(ExamCategory examCategory) {
+		this.examCategory = examCategory;
+	}
 	public String getTitle() {
 		return title;
 	}

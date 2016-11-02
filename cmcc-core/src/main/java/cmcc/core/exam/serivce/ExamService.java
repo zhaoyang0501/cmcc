@@ -28,7 +28,9 @@ public class ExamService extends SimpleCurdService<Exam, Long> {
 	public List<Exam> findEnableExam(){
 		return examRepository.findByIsEnable(true);
 	}
-
+	public List<Exam> findByCategory(Long categoryid){
+		return examRepository.findByExamCategoryIdAndIsEnable(categoryid, true);
+	}
 	public Page<Exam> findAll(int pageNumber, int pageSize, final Boolean isEnable,final String title) {
 		 PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
          Specification<Exam> spec = new Specification<Exam>() {

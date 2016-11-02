@@ -26,6 +26,19 @@
                                 </div>
                             </div>
                            
+                             <div class="form-group">
+                                <label for="" class="col-sm-4 control-label">试卷类别</label>
+                                 <div class="col-sm-8">
+		                                 <select name='examCategory.id'  class="form-control" >
+		                                <option value=""></option>
+		                                <c:forEach items="${categorys}"  var="bean">
+		                            	    <option value="${bean.id }">${bean.name }</option>
+		                                </c:forEach>
+		                                </select>
+                                 </div>
+                            </div>
+                            
+                            
                             <div class="hr-line-dashed"></div>
                             
                             <div class="form-group">

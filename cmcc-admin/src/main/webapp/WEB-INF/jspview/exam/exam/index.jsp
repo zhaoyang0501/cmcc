@@ -29,6 +29,7 @@
                             <thead>
                                 <tr>
 									
+									<th>类别</th>
 									<th>标题</th>
 									<th>状态</th>
 									<th>题目总数</th>
@@ -113,7 +114,9 @@
 	                "type": "POST",
 	                "dataSrc": "datas"
 	              },
-				"columns" : [ {
+				"columns" : [  {
+					"data" : "examCategory.name",
+				},{
 					"data" : "title",
 				},{
 					"data" : "isEnable",
@@ -132,7 +135,7 @@
 				                        return data+"分钟";
 				                        	
 				                    },
-				                    "targets":3
+				                    "targets":4
 				                },
 				                {
 				                    "render": function ( data, type, row ) {
@@ -142,14 +145,14 @@
 				                        	return 	"<span class='label '>无效 </span>";
 				                        	
 				                    },
-				                    "targets":1
+				                    "targets":2
 				                }, 
 				                {
 				                    "render": function ( data, type, row ) {
 				                        return "<a tager='_blank' href='javascript:void(0)' onclick='fun_delete("+data+")'>删除 </a>"+
 				                        "<a tager='_blank' href='${pageContext.request.contextPath}/exam/create/index/"+data+"'>编辑 </a>"
 				                    },
-				                    "targets":5
+				                    "targets":6
 				                }
 				               
 				            ],

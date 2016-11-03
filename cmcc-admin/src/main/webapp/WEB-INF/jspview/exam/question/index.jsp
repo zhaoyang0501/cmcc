@@ -200,7 +200,7 @@
 				                           				   <tr>
 				                           						<td><input  type="text"  name='answers[1].title' class="form-control" value="错误"/></td>
 				                           						<td>
-				                           							<label class='checkbox-inline'> <input type="radio"  name="answers[0].isRight"  value="true" ></label>
+				                           							<label class='checkbox-inline'> <input type="radio"  name="answers[1].isRight"  value="true" ></label>
 				                           						</td>
 				                           					</tr>
 				                           					
@@ -269,8 +269,8 @@
     		for(i=0;i<$("#TRUEORFALSE input[type='text']").length;i++){
         		data+="&answers["+i+"].title="+$("#TRUEORFALSE input[type='text']").eq(i).val();
         	}
-        	for(i=0;i<$("#TRUEORFALSE input[type='checkbox']").length;i++){
-        		data+="&answers["+i+"].isRight="+$("#TRUEORFALSE input[type='checkbox']").eq(i).is(":checked");	 
+        	for(i=0;i<$("#TRUEORFALSE input[type='radio']").length;i++){
+        		data+="&answers["+i+"].isRight="+$("#TRUEORFALSE input[type='radio']").eq(i).is(":checked");	 
         	}
     	}
 		return data;    	

@@ -24,7 +24,7 @@ import cmcc.common.util.UuidGenerater;
 import cmcc.core.sys.entity.User;
 import cmcc.core.sys.service.UserService;
 
-@Api(value = "首页")
+@Api(value = "首页-用户中心")
 @RestController
 public class IndexController {
 	

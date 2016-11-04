@@ -126,11 +126,6 @@ public class ExamController {
 		}
 	}
 	
-	public static void main(String arg[]){
-		int i=8;int j=9;
-		Double a=Double.valueOf(i*100D/j*1.0D);
-		System.out.println();
-	}
 	
 	@ApiOperation(value = "获取今日考试提交排行榜",notes="成功返回今日考试考试排行列表", response=ExamRankDto.class)
 	@RequestMapping(value = "/ranklist/day", method = RequestMethod.GET)

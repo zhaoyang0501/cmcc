@@ -63,6 +63,11 @@ public class UserService extends SimpleCurdService<User, Long> {
 		return user;
 	}
 	
+	public void BindUser(Long userid){
+		this.userRepository.bindUser(userid);
+	}
+	
+	
 	@Transactional
 	public User registerUser(String username,String password,String chinesename) throws AlreadyExistedException{
 		User user = userRepository.findByUsername(username);
@@ -108,7 +113,7 @@ public class UserService extends SimpleCurdService<User, Long> {
 			
 			int code = (int)(Math.random()*9000)+1000;
 			
-			this.mailSenderUtil.sendMail(user.getUsername()+"@139.com", CODE_SUBJECT, "您找回密码的的验证码是："+code+"1小时后过期");
+			this.mailSenderUtil.sendMail(user.getUsername()+"@139.com", CODE_SUBJECT, "您找回密码的的验证码是："+code+",1小时后过期");
 			
 			redisTemplate.opsForValue().set(codekey, String.valueOf(code));
 			redisTemplate.expire(codekey, 1, TimeUnit.HOURS);
@@ -126,7 +131,7 @@ public class UserService extends SimpleCurdService<User, Long> {
 			
 			int code = (int)(Math.random()*9000)+1000;
 			
-			this.mailSenderUtil.sendMail(mail, CODE_SUBJECT, "您绑定手机的验证码是："+code+"1小时后过期");
+			this.mailSenderUtil.sendMail(mail, CODE_SUBJECT, "您绑定手机的验证码是："+code+",1小时后过期");
 			
 			redisTemplate.opsForValue().set(codekey, String.valueOf(code));
 			redisTemplate.expire(codekey, 1, TimeUnit.HOURS);

@@ -102,6 +102,7 @@ public class ExamController {
 			List<Question> questions = exam.getQuestions();
 			ExamResult examResult = new ExamResult();
 			List<ResultItem> items = new ArrayList<ResultItem>();
+			Integer rightNum=0;
 			for(Question q:questions){
 				ResultItem item = new ResultItem();
 				item.setQuestion(q);
@@ -110,15 +111,25 @@ public class ExamController {
 					return  new FailedResponse("答案参数非法");
 				item.setAnswer(answer);
 				item.setIsRight(examResultService.isRight(answer, q.getAnswers()));
+				if(item.getIsRight()) rightNum++;
 				items.add(item);
 			}
 			examResult.setResultItems(items);
 			examResult.setUser(user);
 			examResult.setCreateDate(new Date());
+			examResult.setTotalNum(questions.size());
+			examResult.setRightNum(rightNum);
+			examResult.setScore(Math.ceil(examResult.getRightNum()*100D/examResult.getTotalNum()*1.0D));
 			examResult.setMinute(submit.getMinute());
 			examResultService.save(examResult);
 			return new ObjectResponse<ExamResult>(examResult);
 		}
+	}
+	
+	public static void main(String arg[]){
+		int i=8;int j=9;
+		Double a=Double.valueOf(i*100D/j*1.0D);
+		System.out.println();
 	}
 	
 	@ApiOperation(value = "获取今日考试提交排行榜",notes="成功返回今日考试考试排行列表", response=ExamRankDto.class)

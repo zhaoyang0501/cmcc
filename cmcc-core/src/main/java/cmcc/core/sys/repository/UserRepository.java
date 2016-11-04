@@ -2,6 +2,7 @@ package cmcc.core.sys.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import cmcc.common.repository.SimpleCurdRepository;
@@ -15,6 +16,9 @@ public interface UserRepository   extends SimpleCurdRepository<User ,Long>{
 	public User findByUsernameAndPassword(String username,String password);
 	@Query("select b from User b  inner join fetch b.roles as a where a.id=?1 ")
 	public List<User> findUserByRole(Long rolecode);
+	
+	@Modifying @Query("update User u set u.isBind=true where u.id = ?1")
+	public void bindUser(Long userid);
 	
 	
 }

@@ -43,13 +43,14 @@
 	                            <thead>
 	                                <tr>
 										<th>id</th>
-										<th>手机号码</th>
+										<th>用户名</th>
+										<th>工号</th>
 										<th>真实姓名</th>
 										<th>性别</th>
-										<th>备用电话</th>
-										<th>电子邮件</th>
+										<th>电话</th>
 										<th>部门组织</th>
 										<th>冻结</th>
+										<th>绑定</th>
 										<th>操作</th>
 									</tr>
 	                            </thead>
@@ -98,20 +99,20 @@
 		                           			
 		                           				
 		                           			<tr>
-		                           				<td>手机号码</td>
+		                           				<td>用户名（139邮箱）</td>
 		                           				<td> <input name='username' type="text" class="form-control"></td>
+		                           			</tr>
+		                           			<tr>
+		                           				<td>工号</td>
+		                           				<td> <input name='empid' type="text" class="form-control"></td>
 		                           			</tr>
 		                           			
 		                           			<tr>
-		                           				<td>备用号码</td>
+		                           				<td>电话</td>
 		                           				<td> <input name='tel' type="text" class="form-control"></td>
 		                           			</tr>
 		                           			
 		                           			
-		                           			<tr>
-		                           				<td>email</td>
-		                           				<td> <input name='email'  type="text" class="form-control"></td>
-		                           			</tr>
 		                           			<tr>
 		                           				<td>部门</td>
 		                           				<td>
@@ -154,7 +155,6 @@
 		                           				<td colspan="6"> 
 		                           					 <div class="col-sm-4 col-sm-offset-2">
 		                                  			  		<button class="btn btn-primary" type="button" onclick="submit_form()">提交</button>
-		                                   				    <button class="btn btn-white" type="submit">取消</button>
 		                               				 </div>
 		                           				</td>
 		                           			</tr>
@@ -247,6 +247,7 @@
  		    	$("radio[name='sex']").val(msg.datas.sex);
  		   		$("input[name='username']").val(msg.datas.username);
  				$("input[name='tel']").val(msg.datas.tel);
+ 				$("input[name='empid']").val(msg.datas.empid);
  				$("input[name='email']").val(msg.datas.email);
  				$("textarea[name='remark']").val(msg.datas.remark);
  				$("input:checkbox[name='role']").prop('checked',false); 
@@ -294,6 +295,7 @@
         		$("input[name='id']").val("");
  		    	$("input[name='chinesename']").val("");
  		    	$("radio[name='sex']").val("");
+ 		    	$("radio[name='empid']").val("");
  		   		$("input[name='username']").val("");
  				$("input[name='tel']").val("");
  				$("input[name='email']").val("");
@@ -316,6 +318,8 @@
 					"data" : "id"
 				}, {
 					"data" : "username"
+				}, {
+					"data" : "empid"
 				},{
 					"data" : "chinesename",
 				},{
@@ -323,11 +327,11 @@
 				},{
 					"data" : "tel",
 				},{
-					"data" : "email",
-				},{
 					"data" : "deptment.name",
 				},{
 					"data" : "isFreeze",
+				},{
+					"data" : "isBind",
 				},{
 					"data" : "id",
 				}] ,
@@ -341,6 +345,16 @@
 								        	
 								    },
 								    "targets":7
+								}, 
+								{
+								    "render": function ( data, type, row ) {
+								        if(data)
+								        	return "<span class='label label-primary '>已绑定 </span>";
+								        else
+								        	return 	"<span class='label  label-danger'> 未绑定</span>";
+								        	
+								    },
+								    "targets":8
 								}, 
 				                {
 				                    "render": function ( data, type, row ) {
@@ -357,7 +371,7 @@
 				                    
 				                       
 				                    },
-				                    "targets":8
+				                    "targets":9
 				                }
 				               
 				            ],

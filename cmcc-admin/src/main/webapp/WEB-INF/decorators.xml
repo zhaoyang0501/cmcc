@@ -8,6 +8,7 @@
         <pattern>/bbs/*</pattern>
         <pattern>/exam/*</pattern>
         <pattern>/news/*</pattern>
+        <pattern>/center/*</pattern>
     </decorator>
 
 

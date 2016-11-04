@@ -12,11 +12,13 @@
     <meta name="description" content="">
     <link rel="shortcut icon" href="favicon.ico">
      <link href="${pageContext.request.contextPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+     <link href="${pageContext.request.contextPath}/css/plugins/dataTables/jquery.dataTables.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/animate.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/css/style.min.css?v=4.1.0" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+	
   <link href="${pageContext.request.contextPath}/css/plugins/toastr/toastr.min.css" rel="stylesheet">
   <decorator:head/>
 </head>

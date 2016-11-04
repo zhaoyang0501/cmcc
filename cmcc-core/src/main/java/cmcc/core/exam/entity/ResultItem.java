@@ -5,18 +5,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import cmcc.common.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "t_exam_resultitem")
 public class ResultItem extends BaseEntity<Long> {
 	
+	@ApiModelProperty(name="问题",value="问题")
 	@OneToOne
 	private Question question;
 	
+	@ApiModelProperty(name="用户提交的答案",value="用户提交的答案")
 	private String answer;
 	
+	@ApiModelProperty(name="是否正确",value="是否正确")
 	private Boolean isRight;
 	
+	@ApiModelProperty(hidden=true)
 	@OneToOne
 	private ExamResult examResult;
 	

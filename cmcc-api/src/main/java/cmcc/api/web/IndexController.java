@@ -99,7 +99,7 @@ public class IndexController {
 		}else{
 			if(userService.isCodeSucess(user, code)){
 				user.setIsBind(true);
-				userService.save(user);
+				userService.BindUser(user.getId());
 				return new SuccessResponse("验证通过");
 			}
 			else
